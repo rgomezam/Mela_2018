@@ -1,5 +1,6 @@
 #include <RooDataSet.h>
 
+// This ROOT macro gets you the rates for each channel, to put in combine
 
 void getRates2() {
 
