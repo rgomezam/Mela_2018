@@ -104,18 +104,18 @@ sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z
 
 
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
-    float ratebkgZZ4e = h1->Integral()/**normbkg*/;
+    float ratebkgZZ4e = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
     //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl;	
 
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
-    float ratebkgZZ4mu = h1->Integral()/**normbkg*/;
+    float ratebkgZZ4mu = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu);
-    float ratebkgZZ2e2mu = h1->Integral()/**normbkg*/;
+    float ratebkgZZ2e2mu = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
 
