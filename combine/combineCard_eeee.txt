@@ -1,24 +1,28 @@
+# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZeeee)
+#
+#
+
 imax 1  number of channels
 jmax 2  number of backgrounds plus signals minus 1
 kmax *  number of nuisance parameters
 ------------
 bin            1
-observation    -1 
+observation   -1 
 ------------
-bin                     1			        1          1              1             1       
-process         ZZTo4L   GluGluZZ   ZZJJTo4L_EWK  
-process                 -2       -1         0              1             2       
-rate                    59.757   11.959     0.575          1.129         4.510   
+bin                1	          1          1              
+process          ZZTo4L       GluGluZZ   ZZJJTo4L_EWK 
+process            1              2           0              
+rate            2.518E-06     6.102E-07   1.070E-06        
 ------------
-bkgStat           lnN   -        -          -              -             1.205   
-eScale            lnN   1.000    1.000      1.000          1.008         -       
-pu                lnN   1.007    1.008      1.009          1.047         -       
-trigger           lnN   1.020    1.020      1.020          1.020         -       
-eEff              lnN   1.101    1.102      1.100          1.110         -       
-ePhiRes           lnN   1.001    1.001      1.001          1.017         -       
-eRhoRes           lnN   1.000    1.001      1.000          1.006         -       
-met               lnN   -        -          -              -             1.010   
-scale             lnN   1.010    1.010      1.010          1.010         -       
-pdf               lnN   1.010    1.010      1.010          1.010         -       
-eFR               lnN   -        -          -              -             1.134   
-mcStat_eeee       lnN   1.007    1.002      1.002          1.100         -       
+bkgStat           lnN   -        -          -            
+eScale            lnN   1.000    1.000      1.000            
+pu                lnN   1.007    1.008      1.009            
+trigger           lnN   1.020    1.020      1.020            
+eEff              lnN   1.101    1.102      1.100            
+ePhiRes           lnN   1.001    1.001      1.001             
+eRhoRes           lnN   1.000    1.001      1.000             
+met               lnN   -        -          -             
+scale             lnN   1.010    1.010      1.010             
+pdf               lnN   1.010    1.010      1.010             
+eFR               lnN   -        -          -           
+mcStat_eeee       lnN   1.007    1.002      1.002            
