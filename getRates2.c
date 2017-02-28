@@ -57,7 +57,7 @@ void getRates2() {
   //float normsss = 15.05;
   //float normb = 45216.;
   //float ssb[ncuts];
-   float Lumi=36.8E-03; //Luminosity in pb-1 	
+   float Lumi=36.8E03; //Luminosity in pb-1 	
    
    float normSig= Lumi*0.4404E-03/NgenSig;
 
