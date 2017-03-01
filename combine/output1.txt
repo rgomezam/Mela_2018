@@ -1,0 +1,13 @@
+output 
+
+[rgomezam@lxplus047 combine]$ combine -M ProfileLikelihood --significance combinedCard.txt -t -1 --expectSignal=1 -S 0 --toysFreq
+>>> no systematics included
+>>> method used to compute upper limit is ProfileLikelihood
+>>> random number generator seed is 123456
+Computing limit starting from expected outcome
+
+ -- Profile Likelihood -- 
+Significance: 1.27234
+       (p-value = 0.101626)
+Done in 0.00 min (cpu), 0.00 min (real)
+
