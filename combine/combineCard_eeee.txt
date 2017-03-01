@@ -1,5 +1,6 @@
 # Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZeeee)
 #
+# Run with: ombine -M ProfileLikelihood --significance combineCard_eeee.txt -t -1 --expectSignal=1 -S 0 --toysFreq
 #
 
 imax 1  number of channels
@@ -12,7 +13,7 @@ observation   -1
 bin                1	          1          1              
 process          ZZTo4L       GluGluZZ   ZZJJTo4L_EWK 
 process            1              2           0              
-rate            2.518           6.102E-01   1.070        
+rate            2.51815        0.610189    1.07052       
 ------------
 bkgStat           lnN   -        -          -            
 eScale            lnN   1.000    1.000      1.000            

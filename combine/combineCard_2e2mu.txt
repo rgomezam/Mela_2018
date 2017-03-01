@@ -9,10 +9,10 @@ kmax *  number of nuisance parameters
 bin            1
 observation   -1 
 ------------
-bin                1	          1          1              
-process          ZZTo4L       GluGluZZ     ZZJJTo4L_EWK 
-process            1              2           0              
-rate            6.1225E-06     1.5240E-06  2.6139E-06        
+bin                1	          1            1              
+process          ZZTo4L       GluGluZZ      ZZJJTo4L_EWK 
+process            1              2            0              
+rate            6.12253        1.52404       2.61398        
 ------------
 bkgStat           lnN   -        -          -            
 eScale            lnN   1.000    1.000      1.000            
