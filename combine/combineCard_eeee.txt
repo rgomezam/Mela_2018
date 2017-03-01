@@ -1,6 +1,6 @@
 # Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZeeee)
 #
-# Run with: ombine -M ProfileLikelihood --significance combineCard_eeee.txt -t -1 --expectSignal=1 -S 0 --toysFreq
+# Run with: combine -M ProfileLikelihood --significance combineCard_eeee.txt -t -1 --expectSignal=1 -S 0 --toysFreq
 #
 
 imax 1  number of channels
