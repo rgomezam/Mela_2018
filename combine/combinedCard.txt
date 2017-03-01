@@ -1,0 +1,21 @@
+Combination of Eeee=combineCard_eeee.txt  Emuemu=combineCard_2e2mu.txt  Mumu=combineCard_4mu.txt
+imax 3 number of bins
+jmax 2 number of processes minus 1
+kmax 8 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+bin          Eeee    Emuemu  Mumu  
+observation  -1.0    -1.0    -1.0  
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             Eeee          Eeee          Eeee          Emuemu        Emuemu        Emuemu        Mumu          Mumu          Mumu        
+process                         ZZJJTo4L_EWK  GluGluZZ      ZZTo4L        ZZJJTo4L_EWK  GluGluZZ      ZZTo4L        ZZJJTo4L_EWK  GluGluZZ      ZZTo4L      
+process                         0             1             2             0             1             2             0             1             2           
+rate                            1.0705        0.6102        2.5181        2.6140        1.5240        6.1225        1.5585        0.8948        3.6497      
+----------------------------------------------------------------------------------------------------------------------------------
+eEff                    lnN     1.1           1.102         1.101         1.1           1.102         1.101         1.1           1.102         1.101       
+ePhiRes                 lnN     1.001         1.001         1.001         1.001         1.001         1.001         1.001         1.001         1.001       
+eRhoRes                 lnN     1.0           1.001         1.0           1.0           1.001         1.0           1.0           1.001         1.0         
+mcStat_eeee             lnN     1.002         1.002         1.007         1.002         1.002         1.007         1.002         1.002         1.007       
+pdf                     lnN     1.01          1.01          1.01          1.01          1.01          1.01          1.01          1.01          1.01        
+pu                      lnN     1.009         1.008         1.007         1.009         1.008         1.007         1.009         1.008         1.007       
+scale                   lnN     1.01          1.01          1.01          1.01          1.01          1.01          1.01          1.01          1.01        
+trigger                 lnN     1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02        
