@@ -12,7 +12,7 @@ observation   -1
 bin                1	          1          1              
 process          ZZTo4L       GluGluZZ   ZZJJTo4L_EWK 
 process            1              2           0              
-rate            2.518E-06     6.102E-07   1.070E-06        
+rate            2.518           6.102E-01   1.070        
 ------------
 bkgStat           lnN   -        -          -            
 eScale            lnN   1.000    1.000      1.000            
