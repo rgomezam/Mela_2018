@@ -66,45 +66,46 @@ void systematicsUP() {
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
 
-  TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000,1000);
   char cutting[400];
-  char cutting2[400];
-
+  char cuttingUp[400];
+ 
 
 // First (no loop) find the denominators (effsig=X , effbkg=Y)  OBS Here there is a cut on mjj is 100 (fiducial)
 
-    sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. ");
-    
+    sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100.  && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal)> 0.66");
+    sprintf(cuttingUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66");   
+
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting); 
     float effsig0 = h1->Integral()*normSig;    
 
-    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting); 
-    float effsigUP = h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp); 
+    float effsigUp = h1->Integral()*normSig;
 	
     
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     float effbkg0 = h1->Integral()*normbkg;
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting);
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
     float effbkgUp = h1->Integral()*normbkg;
 
 
     bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg1;
 
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting);
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
     effbkgUp =+ h1->Integral()*normBkg1;
 
     bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg2;
 
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting);
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
     effbkgUp =+ h1->Integral()*normBkg2;
 
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg3;	
 
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting);
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
     effbkgUp =+ h1->Integral()*normBkg3;
   
 
@@ -115,159 +116,5 @@ void systematicsUP() {
     cout << "Delta Bkg = " << DeltaB << endl;   
 
 
-  }
-
-
-float Seff[ncuts];
-float Beff[ncuts];
-float SeffMVA[ncuts];
-float BeffMVA[ncuts];
-
-for (int i=0; i<ncuts; i++) {
-Beff[i]=Xp[i]/X;
-Seff[i]=Yp[i]/Y;
-BeffMVA[i]=Zp[i]/Z;
-SeffMVA[i]=Tp[i]/T;
-}
-
-
-//Third: find the point given by the cuts: 
-   sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
-    
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
-    float effsig2 = h1->Integral()*normSig;
-   
-    
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
-    float effbkg2 = h1->Integral()*normbkg;
-
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
-    effbkg2 =+ h1->Integral()*normBkg1;
-
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
-    effbkg2 =+ h1->Integral()*normBkg2;
- 
-    bkg3->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
-    effbkg2 =+ h1->Integral()*normBkg3;
-    
-
-  
-    double Y2 = effsig2/Y;
-    double X2 = effbkg2/X;
-    
-	
-
-//Fourth: test see if you produce the same point with the mva
-
-    // ZZjj_MVA
-
-    sig->Draw("ZZjj_MVA >> h1",cutting2); 
-    float effsigMVA2 = h1->Integral()*normSig;    
-    
-    bkg->Draw("ZZjj_MVA >> h1",cutting2);
-    float effbkgMVA2 = h1->Integral()*normbkg;
-
-    bkg1->Draw("ZZjj_MVA >> h1",cutting2);
-    effbkgMVA2 =+ h1->Integral()*normBkg1;
-
-    bkg2->Draw("ZZjj_MVA >> h1",cutting2);
-    effbkgMVA2 =+ h1->Integral()*normBkg2;
-
-    bkg3 ->Draw("ZZjj_MVA >> h1",cutting2);
-    effbkgMVA2 =+ h1->Integral()*normBkg3;
-
-
-    double Z2 = effbkgMVA2/Z;    
-    double T2 = effsigMVA2/T;
-    
-
-
-
-  //TGraph* gr = new TGraph(ncuts, Beff, Seff);
-  //gr->Draw("ALP*");
-  //TGraph *gr2 = new TGraph(1, Y2, X2);
-  //gr2->SetMarkerStyle(21);  
-  //gr2->Draw("ALP* same");
-
-  
-
-//TMultiGraph* mg  = new TMultiGraph();
-TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-//TGraph *gr2 = new TGraph(1, Y2, X2);
-TMarker *gr2 = new TMarker(X2,Y2,22);
-   //gROOT->ProcessLine(".x tdrstyle.C");
-//TMultiGraph* mg  = new TMultiGraph();
-TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
-//TGraph *gr2 = new TGraph(1, Y2, X2);
-TMarker *gr4 = new TMarker(Z2,T2,21);
-   //gROOT->ProcessLine(".x tdrstyle.C");
-   
-    gr1->SetTitle("ROC curve MELA");
-    gr1->SetLineWidth(1);
-    gr1->SetLineColor(2);
-    gr1->GetXaxis()->SetLimits(-0.07,1.07);
-    gr1->GetXaxis()->SetTitle("Background eff");
-    gr1->GetYaxis()->SetTitle("Signal eff");
-    gr1->SetMinimum(0.);
-    gr1->SetMaximum(1.07);
-    
-    gr3->SetTitle("ROC curve MVA");
-    gr3->SetLineWidth(1);
-    gr3->SetLineColor(3);
-    gr3->GetXaxis()->SetLimits(-0.07,1.07);
-    //gr3->GetXaxis()->SetTitle("Background eff");
-    //gr3->GetYaxis()->SetTitle("Signal eff");
-    gr3->SetMinimum(0.);
-    gr3->SetMaximum(1.07);   
-
-    gr1->Draw("ALP");
-    gr2->Draw("same");
-//    gr3->Draw("same");
-//    gr4->Draw("same");
-
-//mg->Add(gr1); gr1->SetTitle("esempio"); gr1->GetYaxis()->SetTitle("#epsilon_{S}");
-//mg->Add(gr2); gr2->SetTitle("esempi2"); 
-//mg->Draw("ALP*"); 	
-  TLegend *legend = new TLegend(0.70,0.25,0.95,0.40,NULL,"brNDC");
-  legend->SetBorderSize(     0);
-  legend->SetFillColor (     0);
-  legend->SetTextAlign (    12);
-  legend->SetTextFont  (    42);
-  legend->SetTextSize  (0.03);
-  legend->AddEntry(gr1, "MELA" , "l");
-  legend->AddEntry(gr2, "VBS cut-based" , "l");
-  legend->AddEntry(gr3, "BDT" , "l");
-  legend->AddEntry(gr2, "BDT cut-based" , "l");
-  legend->Draw("same");
- 
-float distX=abs(Beff[0]-X2);
-float distY=abs(Seff[0]-Y2);
-float epsilonX, epsilonY;
-int minX, minY;
-
-for (int i=1;i<ncuts; i++){
-cout << "distance X " << abs(Beff[i]-X2) << endl;
-if (abs(Beff[i]-X2)< distX){
-distX=abs(Beff[i]-X2);
-minX=i;
-cout << "Closest x is " << i << endl;
-}
-cout << "distance Y " << abs(Seff[i]-Y2) << endl;
-if (abs(Seff[i]-Y2)< distY){
-distY=abs(Seff[i]-Y2);
-minY=i;
-cout << "Closest y is " << i << endl;
-}
 
 }
-
-epsilonX= abs(Beff[minY]-X2); 
-cout << "EpsilonX: " << epsilonX << endl;
-epsilonY=abs(Seff[minX]-Y2);
-cout << "EpsilonY: " << epsilonY << endl; 
-
-}
-
-
-
-
