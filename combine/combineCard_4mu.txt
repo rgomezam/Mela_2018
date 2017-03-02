@@ -26,3 +26,4 @@ scale             lnN   1.010    1.010      1.010
 pdf               lnN   1.010    1.010      1.010             
 eFR               lnN   -        -          -           
 mcStat_eeee       lnN   1.007    1.002      1.002            
+#jetEnScale         lnN   1.062    1.093      1.012
