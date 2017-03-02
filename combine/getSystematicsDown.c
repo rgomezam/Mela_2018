@@ -65,7 +65,7 @@ void getSystematicsDown() {
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
 
-  TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000,1000);
   char cutting[400];
   char cutting4e[400];
   char cutting4mu[400];
@@ -82,7 +82,7 @@ void getSystematicsDown() {
 
 sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
 
-sprintf(cuttingDn,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66");
+sprintf(cuttingDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66");
 
 sprintf(cutting4e,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
 
@@ -90,11 +90,11 @@ sprintf(cutting4mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2M
 
 sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
 
-sprintf(cutting4eDn,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+sprintf(cutting4eDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
 
-sprintf(cutting4muDn,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+sprintf(cutting4muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
 
-sprintf(cutting2e2muDn,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
 
 
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu); 
