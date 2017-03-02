@@ -1,6 +1,5 @@
-# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZeeee)
+# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZeemumu)
 #
-# Run with: combine -M ProfileLikelihood --significance combineCard_eeee.txt -t -1 --expectSignal=1 -S 0 --toysFreq
 #
 
 imax 1  number of channels
@@ -10,10 +9,10 @@ kmax *  number of nuisance parameters
 bin            1
 observation   -1 
 ------------
-bin                1	          1          1              
-process          ZZTo4L       GluGluZZ   ZZJJTo4L_EWK 
-process            1              2           0              
-rate            2.51815        0.610189    1.07052       
+bin                1	          1            1              
+process          ZZTo4L       GluGluZZ      ZZJJTo4L_EWK 
+process            1              2            0              
+rate            6.12253        1.52404       2.61398        
 ------------
 #bkgStat           lnN   -        -          -            
 #eScale            lnN   1.000    1.000      1.000            
@@ -27,4 +26,4 @@ rate            2.51815        0.610189    1.07052
 #pdf               lnN   1.010    1.010      1.010             
 #eFR               lnN   -        -          -           
 #mcStat_eeee       lnN   1.007    1.002      1.002            
-jetEnScale         lnN   1.086    1.167      1.020
+jetEnScale         lnN   1.079    1.153      1.019

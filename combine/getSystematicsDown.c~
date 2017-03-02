@@ -65,7 +65,7 @@ void getSystematicsDown() {
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
 
-  TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000,1000);
   char cutting[400];
   char cutting4e[400];
   char cutting4mu[400];
