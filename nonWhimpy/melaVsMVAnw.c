@@ -1,11 +1,9 @@
 #include <RooDataSet.h>
 
-gROOT->ProcessLine(".x tdrstyle.C"); 
 
 void melaVsMVAnw() {
 
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
-// ZZjj_ewk xsec= 0.4404E-03
   TTree *sig = (TTree*)f1->Get("ZZTree/candTree");
   TH1F *hs = (TH1F*)f1->Get("ZZTree/Counters");
 
@@ -34,9 +32,8 @@ void melaVsMVAnw() {
 
 
 
-  static const int ncuts = 101;
+  static const int ncuts = 100; //I changed this wrt the previous version 
   float cuts[ncuts];
-  float cutsMVA[ncuts];
 
   float NgenSig = hs->GetBinContent(1);
   cout << "NgenSig = " << NgenSig << endl;  
@@ -54,6 +51,11 @@ void melaVsMVAnw() {
   cout << "NgenBkg 4mu = " << NgenBkg3 << endl;
 
 
+
+  //float norms = 30.08;
+  //float normsss = 15.05;
+  //float normb = 45216.;
+  //float ssb[ncuts];
    float Lumi=36.8E03; //Luminosity in pb-1 	
    
    float normSig= Lumi*0.4404E-03/NgenSig;
@@ -70,10 +72,9 @@ void melaVsMVAnw() {
    float Zp[ncuts];
    float Tp[ncuts];
 
-  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000,1000);
   char cutting[400];
   char cutting2[400];
-  char cuttingMVA[400];
 
 
 // First (no loop) find the denominators (effsig=X , effbkg=Y)  OBS Here there is a cut on mjj is 100 (fiducial)
@@ -94,10 +95,7 @@ void melaVsMVAnw() {
     effbkg0 =+ h1->Integral()*normBkg2;
 
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    effbkg0 =+ h1->Integral()*normBkg3;
-
-    X = effbkg0;
-    Y = effsig0;	
+    effbkg0 =+ h1->Integral()*normBkg3;	
   
     //ZZjj_MVA
 
@@ -115,18 +113,20 @@ void melaVsMVAnw() {
 
     bkg3 ->Draw("ZZjj_MVA >> h1",cutting);
     effbkgMVA0 =+ h1->Integral()*normBkg3;	
+
+    X = effbkg0;
+    Y = effsig0;
     
     Z = effbkgMVA0;
     T = effsigMVA0;
     
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Second (loop) find the numerators (effsig=X , effbkg=Y)   
   for (int i=0; i<ncuts; i++) {
-    cuts[i] = i*0.01;
-    sprintf(cutting,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > %f",cuts[i]);
+    cuts[i] = i*0.02;
+    sprintf(cutting,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && ZZjj_MVA > %f",cuts[i]);
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     float effsig = h1->Integral()*normSig;
@@ -144,32 +144,29 @@ void melaVsMVAnw() {
     bkg3->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg =+ h1->Integral()*normBkg3;
 
-
-    Yp[i] = effsig;
-    Xp[i] = effbkg;
-
 // ZZjj_MVA
-   cutsMVA[i] = -0.63 + i*0.0147;
-   sprintf(cuttingMVA,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && ZZjj_MVA > %f",cutsMVA[i]);
-    sig->Draw("ZZjj_MVA >> h1",cuttingMVA); 
+
+    sig->Draw("ZZjj_MVA >> h1",cutting); 
     float effsigMVA = h1->Integral()*normSig;    
     
-    bkg->Draw("ZZjj_MVA >> h1",cuttingMVA);
+    bkg->Draw("ZZjj_MVA >> h1",cutting);
     float effbkgMVA = h1->Integral()*normbkg;
 
-    bkg1->Draw("ZZjj_MVA >> h1",cuttingMVA);
+    bkg1->Draw("ZZjj_MVA >> h1",cutting);
     effbkgMVA =+ h1->Integral()*normBkg1;
 
-    bkg2->Draw("ZZjj_MVA >> h1",cuttingMVA);
+    bkg2->Draw("ZZjj_MVA >> h1",cutting);
     effbkgMVA =+ h1->Integral()*normBkg2;
 
-    bkg3 ->Draw("ZZjj_MVA >> h1",cuttingMVA);
+    bkg3 ->Draw("ZZjj_MVA >> h1",cutting);
     effbkgMVA =+ h1->Integral()*normBkg3;
 
 
+
+    Yp[i] = effsig;
+    Xp[i] = effbkg;
     Tp[i] = effsigMVA;
     Zp[i] = effbkgMVA;
-
 
   }
 
@@ -208,8 +205,8 @@ SeffMVA[i]=Tp[i]/T;
     
 
   
-    float Y2 = effsig2/Y; //Tmarker is double, TGraph is float
-    float X2 = effbkg2/X;
+    double Y2 = effsig2/Y;
+    double X2 = effbkg2/X;
     
 	
 
@@ -233,20 +230,28 @@ SeffMVA[i]=Tp[i]/T;
     effbkgMVA2 =+ h1->Integral()*normBkg3;
 
 
-    float Z2 = effbkgMVA2/Z;    
-    float T2 = effsigMVA2/T;
+    double Z2 = effbkgMVA2/Z;    
+    double T2 = effsigMVA2/T;
     
 
 
 
+  //TGraph* gr = new TGraph(ncuts, Beff, Seff);
+  //gr->Draw("ALP*");
+  //TGraph *gr2 = new TGraph(1, Y2, X2);
+  //gr2->SetMarkerStyle(21);  
+  //gr2->Draw("ALP* same");
 
-TMultiGraph* mg  = new TMultiGraph();
+  
+
+//TMultiGraph* mg  = new TMultiGraph();
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-//TGraph *gr2 = new TGraph(1, &X2, &Y2);
+//TGraph *gr2 = new TGraph(1, Y2, X2);
 TMarker *gr2 = new TMarker(X2,Y2,22);
-//gROOT->ProcessLine(".x tdrstyle.C");
+   //gROOT->ProcessLine(".x tdrstyle.C");
+//TMultiGraph* mg  = new TMultiGraph();
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
-//TGraph *gr4 = new TGraph(1, &Z2, &T2);
+//TGraph *gr2 = new TGraph(1, Y2, X2);
 TMarker *gr4 = new TMarker(Z2,T2,21);
    //gROOT->ProcessLine(".x tdrstyle.C");
    
@@ -263,27 +268,19 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     gr3->SetLineWidth(1);
     gr3->SetLineColor(3);
     gr3->GetXaxis()->SetLimits(-0.07,1.07);
-    gr3->GetXaxis()->SetTitle("Background eff");
-    gr3->GetYaxis()->SetTitle("Signal eff");
+    //gr3->GetXaxis()->SetTitle("Background eff");
+    //gr3->GetYaxis()->SetTitle("Signal eff");
     gr3->SetMinimum(0.);
     gr3->SetMaximum(1.07);   
- 
-    gr2->SetMarkerStyle(21);	
-    gr4->SetMarkerStyle(23);
 
-/*    gr1->Draw("ALP");
+    gr1->Draw("ALP");
     gr2->Draw("same");
-    gr3->Draw("same");
-    gr4->Draw("same"); */
+//    gr3->Draw("same");
+//    gr4->Draw("same");
 
-mg->Add(gr1); gr1->SetTitle("Test 0.2"); //gr1->GetYaxis()->SetTitle("#epsilon_{S}");
-//mg->Add(gr2); //gr2->SetTitle("esempi2"); 
-mg->Add(gr3); //gr3->SetTitle("esempio"); gr1->GetYaxis()->SetTitle("#epsilon_{S}");
-//mg->Add(gr4); //gr4->SetTitle("esempi2"); 
-mg->Draw("ALP"); 	
-gr2->Draw("same");
-gr4->Draw("same");
-
+//mg->Add(gr1); gr1->SetTitle("esempio"); gr1->GetYaxis()->SetTitle("#epsilon_{S}");
+//mg->Add(gr2); gr2->SetTitle("esempi2"); 
+//mg->Draw("ALP*"); 	
   TLegend *legend = new TLegend(0.70,0.25,0.95,0.40,NULL,"brNDC");
   legend->SetBorderSize(     0);
   legend->SetFillColor (     0);
@@ -291,9 +288,9 @@ gr4->Draw("same");
   legend->SetTextFont  (    42);
   legend->SetTextSize  (0.03);
   legend->AddEntry(gr1, "MELA" , "l");
-  // legend->AddEntry(gr2, "VBS cut-based" , "l");
+  legend->AddEntry(gr2, "VBS cut-based" , "l");
   legend->AddEntry(gr3, "BDT" , "l");
-  legend->AddEntry(gr4, "cut-based" , "l");
+  legend->AddEntry(gr2, "BDT cut-based" , "l");
   legend->Draw("same");
  
 float distX=abs(Beff[0]-X2);
