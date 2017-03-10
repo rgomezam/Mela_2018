@@ -3,7 +3,7 @@
 
 void melaVsMVAnw() {
 
-//gROOT->ProcessLine(".x tdrstyle.C"); 
+gROOT->ProcessLine(".x tdrstyle.C"); 
 
 
 
@@ -254,7 +254,6 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
    //gROOT->ProcessLine(".x tdrstyle.C");
    
     gr1->SetTitle("ROC curve MELA");
-    gr1->SetMarkerStyle(kFullCircle);
     gr1->SetLineWidth(1);
     gr1->SetLineColor(2);
     gr1->GetXaxis()->SetLimits(-0.07,1.07);
