@@ -3,7 +3,7 @@
 
 void melaVsMVAnw() {
 
-//gROOT->ProcessLine(".x tdrstyle.C"); 
+gROOT->ProcessLine(".x tdrstyle.C"); 
 
 
 
@@ -244,6 +244,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
+mg->SetTitle("Test 0.2");
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 //TGraph *gr2 = new TGraph(1, &X2, &Y2);
 TMarker *gr2 = new TMarker(X2,Y2,22);
@@ -254,9 +255,9 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
    //gROOT->ProcessLine(".x tdrstyle.C");
    
     gr1->SetTitle("ROC curve MELA");
-    gr1->SetMarkerStyle(kFullCircle);
+    //gr1->SetMarkerStyle(kFullCircle);
     gr1->SetLineWidth(1);
-    gr1->SetLineColor(2);
+    gr1->SetLineColor(kBlue);
     gr1->GetXaxis()->SetLimits(-0.07,1.07);
     gr1->GetXaxis()->SetTitle("Background eff");
     gr1->GetYaxis()->SetTitle("Signal eff");
@@ -265,30 +266,30 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     
     gr3->SetTitle("ROC curve MVA");
     gr3->SetLineWidth(1);
-    gr3->SetLineColor(3);
+    gr3->SetLineColor(2);
     gr3->GetXaxis()->SetLimits(-0.07,1.07);
     gr3->GetXaxis()->SetTitle("Background eff");
     gr3->GetYaxis()->SetTitle("Signal eff");
     gr3->SetMinimum(0.);
     gr3->SetMaximum(1.07);   
  
-    gr2->SetMarkerStyle(21);	
-    gr4->SetMarkerStyle(23);
+    gr2->SetMarkerStyle(22);	
+    gr4->SetMarkerStyle(22);
 
 /*    gr1->Draw("ALP");
     gr2->Draw("same");
     gr3->Draw("same");
     gr4->Draw("same"); */
 
-mg->Add(gr1); gr1->SetTitle("Test 0.2"); //gr1->GetYaxis()->SetTitle("#epsilon_{S}");
+mg->Add(gr1);  //gr1->GetYaxis()->SetTitle("#epsilon_{S}");
 //mg->Add(gr2); //gr2->SetTitle("esempi2"); 
 mg->Add(gr3); //gr3->SetTitle("esempio"); gr1->GetYaxis()->SetTitle("#epsilon_{S}");
 //mg->Add(gr4); //gr4->SetTitle("esempi2"); 
-mg->Draw("ALP"); 	
+mg->Draw("AL"); 	
 gr2->Draw("same");
 gr4->Draw("same");
 
-  TLegend *legend = new TLegend(0.70,0.25,0.95,0.40,NULL,"brNDC");
+  TLegend *legend = new TLegend(0.70,0.25,0.80,0.40,NULL,"brNDC");
   legend->SetBorderSize(     0);
   legend->SetFillColor (     0);
   legend->SetTextAlign (    12);
@@ -297,7 +298,7 @@ gr4->Draw("same");
   legend->AddEntry(gr1, "MELA" , "l");
   // legend->AddEntry(gr2, "VBS cut-based" , "l");
   legend->AddEntry(gr3, "BDT" , "l");
-  legend->AddEntry(gr4, "cut-based" , "l");
+  legend->AddEntry(gr4, "cut-based" , "p");
   legend->Draw("same");
  
 float distX=abs(Beff[0]-X2);
