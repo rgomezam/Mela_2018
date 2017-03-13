@@ -1,10 +1,13 @@
 #include <RooDataSet.h>
+//#include "tdrstyle.C"
+//#include "CMS_lumi.C"
+//#include "CMS_lumi.h"
 
 
 void testPlots() {
 
-//gROOT->ProcessLine(".x tdrstyle.C"); 
-
+gROOT->ProcessLine(".x tdrstyle.C"); 
+//gROOT->ProcessLine(".x CMS_lumi.C");
 
 
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -42,6 +45,7 @@ void testPlots() {
    float Zp[ncuts];
    float Tp[ncuts];
 
+  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
   TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
   char cutting[400];
   char cutting2[400];
@@ -158,7 +162,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
-mg->SetTitle("Global title; X Axis; Y Axis");
+mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
@@ -213,15 +217,16 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
   legend->AddEntry(gr4, "cut-based" , "p");
   legend->Draw("same");
  
+TPaveText *pt = new TPaveText(0.2,0.9,0.4,0.85, "NDC");
+pt->AddText("CMS Simulation");
+pt->Draw("same");
 
-gPad->Update();
-gPad->Modified();
+//gPad->Update();
+//gPad->Modified();
+
+
+
 
 }
-
-
-
-
-
 
 
