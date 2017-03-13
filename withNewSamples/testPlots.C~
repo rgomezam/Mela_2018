@@ -162,14 +162,14 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
-mg->SetTitle("Global title; X Axis; Y Axis");
+mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-TMarker *gr2 = new TMarker(X2,Y2,22);
+//TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
 TMarker *gr4 = new TMarker(Z2,T2,21);
    
     //gr1->SetTitle("ROC curve MELA");
-    gr1->SetLineWidth(3);
+    gr1->SetLineWidth(7);
     gr1->SetLineColor(kBlue);
     gr1->GetXaxis()->SetLimits(-0.07,1.07);
     //gr1->GetXaxis()->SetTitle("Background eff");
@@ -179,7 +179,7 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     mg->Add(gr1); 
     
     
-    gr3->SetLineWidth(3);
+    gr3->SetLineWidth(7);
     gr3->SetLineColor(2);
     gr3->GetXaxis()->SetLimits(-0.07,1.07);
     //gr3->GetXaxis()->SetTitle("Background eff");
@@ -188,13 +188,14 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     gr3->SetMaximum(1.07); 
     mg->Add(gr3); 
  
-    gr2->SetMarkerStyle(22);	
+    //gr2->SetMarkerStyle(22);
+    gr4->SetMarkerSize(4);	
     gr4->SetMarkerStyle(22);
 
 
     //mg->SetTitle("ROC curve MELA");
     mg->Draw("AL"); 	
-    gr2->Draw("same");
+    //gr2->Draw("same");
     gr4->Draw("same");
 
     /*gPad->Update();
@@ -205,21 +206,32 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     mg->GetHistogram()->SetTitle("ROC curve MELA");
 */
 
-  TLegend *legend = new TLegend(0.70,0.25,0.80,0.40,NULL,"brNDC");
+  TLegend *legend = new TLegend(0.50,0.25,0.80,0.40,NULL,"brNDC");
   legend->SetBorderSize(     0);
   legend->SetFillColor (     0);
   legend->SetTextAlign (    12);
-  legend->SetTextFont  (    42);
-  legend->SetTextSize  (0.03);
+  legend->SetTextFont  (    62);
+  legend->SetTextSize  (0.04);
   legend->AddEntry(gr1, "MELA" , "l");
   // legend->AddEntry(gr2, "VBS cut-based" , "l");
   legend->AddEntry(gr3, "BDT" , "l");
   legend->AddEntry(gr4, "cut-based" , "p");
+  //legend->SetMarkerSize(20);
   legend->Draw("same");
  
-TPaveText *pt = new TPaveText(0.2,0.9,0.4,0.85, "NDC");
-pt->AddText("CMS Simulation");
+TPaveText *pt = new TPaveText(0.18,0.9,0.4,0.85, "NDC");
+pt->SetFillColor(0);
+pt->SetTextFont(62);
+pt->SetTextSize  (0.04);
+pt->AddText("CMS ");
 pt->Draw("same");
+
+TPaveText *pt2 = new TPaveText(0.18,0.85,0.4,0.80, "NDC");
+pt2->AddText(" Simulation");
+pt2->SetFillColor(0);
+pt2->SetTextFont(52);
+pt2->SetTextSize  (0.04);
+pt2->Draw("same");
 
 //gPad->Update();
 //gPad->Modified();
