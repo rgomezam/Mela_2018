@@ -1,13 +1,9 @@
 #include <RooDataSet.h>
-//#include "tdrstyle.C"
-//#include "CMS_lumi.C"
-//#include "CMS_lumi.h"
 
 
 void RocCurve() {
 
 gROOT->ProcessLine(".x tdrstyle.C"); 
-//gROOT->ProcessLine(".x CMS_lumi.C");
 
 
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -317,11 +313,10 @@ pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
 pt2->Draw("same");
 
-//gPad->Update();
-//gPad->Modified();
 
-
-
+TFile *fout =new TFile(“ROC_MELA_vs_BDT.root”, “RECREATE”);
+c1->Write();
+fout-> Close();
 
 }
 
