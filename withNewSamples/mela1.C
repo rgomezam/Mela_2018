@@ -1,7 +1,7 @@
 #include <RooDataSet.h>
 
 
-void RocCurve() {
+void mela1() {
 
 gROOT->ProcessLine(".x tdrstyle.C"); 
 
@@ -34,6 +34,23 @@ gROOT->ProcessLine(".x tdrstyle.C");
   TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
 
 
+  char opt;
+
+  cout << "this is a test. Enter 'a' or 'b'" << endl;
+  cin >> opt;
+
+  switch (opt){
+
+  case 'a':
+     cout << "the option was a" << endl;
+   
+  case 'b': 
+    cout << "the option is b" << endl;
+
+  else:
+    break;
+
+}	 
 
 
   static const int ncuts = 101;
