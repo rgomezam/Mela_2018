@@ -48,13 +48,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
   switch (opt){
 
   case 'a':
-<<<<<<< HEAD
-     cout << "the option was a" << endl;
-     break;
-   
-  case 'b': 
-    cout << "the option is b" << endl;
-=======
      cout << "Calculating Roc curve" << endl;
      plotRocCurve();
      break;
@@ -62,7 +55,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
   case 'b': 
     cout << "Getting rates" << endl;
     getRates();
->>>>>>> e92edb0aa647d8e38f5701127794c3560f428aed
     break;
 
   default:
@@ -271,10 +263,6 @@ SeffMVA[i]=Tp[i]/T;
     
     float Z2 = effbkgMVA2/Z;    
     float T2 = effsigMVA2/T;
-    
-
-
-
 
 
 }
@@ -434,6 +422,6 @@ sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z
   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
 
-}
+
 
 }
