@@ -1,8 +1,8 @@
 #include <RooDataSet.h>
 
 
-void plotRocCurve();
-void getRates();
+//void plotRocCurve();
+void getRates(TTree *sig, TTree *bkg, TTree *bkg1, TTree *bkg2, TTree *bkg3);
 
 
 void mela1() {
@@ -49,12 +49,12 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
   case 'a':
      cout << "Calculating Roc curve" << endl;
-     plotRocCurve();
+     //plotRocCurve();
      break;
    
   case 'b': 
     cout << "Getting rates" << endl;
-    getRates();
+    getRates(sig, bkg, bkg1, bkg2, bkg3);
     break;
 
   default:
@@ -267,6 +267,8 @@ SeffMVA[i]=Tp[i]/T;
 
 }
 
+
+/*
 void plotRocCurve(){
 
 TMultiGraph* mg  = new TMultiGraph();
@@ -346,10 +348,10 @@ TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
 c1->Write();
 fout-> Close();
 }
+*/
 
 
-
-void getRates(){
+void getRates(TTree *sig, TTree *bkg, TTree *bkg1, TTree *bkg2, TTree *bkg3){
 
  // TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
   char cutting[400];
@@ -421,7 +423,6 @@ sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z
     float rategg4mu = h1->Integral()*normBkg3;	
   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
-
 
 
 }
