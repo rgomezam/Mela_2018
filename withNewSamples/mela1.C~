@@ -43,11 +43,9 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
   case 'a':
      cout << "the option was a" << endl;
-     break;
    
   case 'b': 
     cout << "the option is b" << endl;
-    break;
 
   default:
     break;
