@@ -33,10 +33,8 @@ void getRates();
   TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
   TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
 
-  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
-  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
 
- static const int ncuts = 101;
+  static const int ncuts = 101;
   float cuts[ncuts];
   float cutsMVA[ncuts];
 
@@ -105,7 +103,11 @@ return;
 
 
 void plotRocCurve(){
+
 gROOT->ProcessLine(".x tdrstyle.C"); 
+
+  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
 
    float X,Y,Z,T;
    float Xp[ncuts];
@@ -443,7 +445,7 @@ return;
 void retrieveRocCurve(){
 gROOT->ProcessLine(".x tdrstyle.C"); 
 TFile *roc = TFile::Open("ROC_MELA_vs_BDT.root");
-TCanvas *c2 = (TCanvas*)roc->Get("c1"); 
+TCanvas *c1 = (TCanvas*)roc->Get("c1"); 
 c1->Draw();
 //roc->Close();
 return;
