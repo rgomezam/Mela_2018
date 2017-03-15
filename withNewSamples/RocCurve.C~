@@ -1,13 +1,9 @@
 #include <RooDataSet.h>
-//#include "tdrstyle.C"
-//#include "CMS_lumi.C"
-//#include "CMS_lumi.h"
 
 
 void RocCurve() {
 
 gROOT->ProcessLine(".x tdrstyle.C"); 
-//gROOT->ProcessLine(".x CMS_lumi.C");
 
 
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -254,7 +250,7 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
    
     //gr1->SetTitle("ROC curve MELA");
     gr1->SetLineWidth(7);
-    gr1->SetLineColor(kBlue);
+    gr1->SetLineColor(kRed);
     gr1->GetXaxis()->SetLimits(-0.07,1.07);
     //gr1->GetXaxis()->SetTitle("Background eff");
     //gr1->GetYaxis()->SetTitle("Signal eff");
@@ -264,7 +260,7 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     
     
     gr3->SetLineWidth(7);
-    gr3->SetLineColor(2);
+    gr3->SetLineColor(kBlue);
     gr3->GetXaxis()->SetLimits(-0.07,1.07);
     //gr3->GetXaxis()->SetTitle("Background eff");
     //gr3->GetYaxis()->SetTitle("Signal eff");
@@ -317,11 +313,11 @@ pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
 pt2->Draw("same");
 
-//gPad->Update();
-//gPad->Modified();
+c1->SaveAs("ROCcurve.gif");
 
-
-
+TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
+c1->Write();
+fout-> Close();
 
 }
 

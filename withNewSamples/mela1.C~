@@ -1,109 +1,41 @@
 #include <RooDataSet.h>
 
 
-void plotRocCurve(TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 /*, TH1F *h1*/);
-void getRates(TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 /*, TH1F *h1*/);
+//Functions:
+
+void retrieveRocCurve();
+void plotRocCurve();
+void getRates();
 
 
-void mela1() {
-
+//Global Variables:
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
-// ZZjj_ewk xsec= 0.4404E-03
-//  TTree *sig = (TTree*)f1->Get("ZZTree/candTree");
-//  TH1F *hs = (TH1F*)f1->Get("ZZTree/Counters");
-
-  TFile *f2 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_qcd/ZZ4lAnalysis.root");
-// ZZjj_qcd xsec = 9.335E-03 pb
-//  TTree *bkg = (TTree*)f2->Get("ZZTree/candTree");
-//  TH1F *h0 = (TH1F*)f2->Get("ZZTree/Counters");	
-
-  TFile *f5 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo2e2mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo2e2mu xsec = 0.0031942 pb
-//  TTree *bkg1 = (TTree*)f5->Get("ZZTree/candTree");
-//  TH1F *h5 = (TH1F*)f5->Get("ZZTree/Counters");
-
-  TFile *f6 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4e_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo4e  xsec = 0.00158549 pb
-//  TTree *bkg2 = (TTree*)f6 ->Get("ZZTree/candTree");
-//  TH1F *h6 = (TH1F*)f6->Get("ZZTree/Counters");
-
-  TFile *f7 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo4mu xsec = 0.00158549 pb
-//  TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
-//  TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
-
-
- 
-
-
-  char opt;
-  
-  cout << "Enter:" << endl;
-  cout << "a) to get the plot with the ROC curve for MELA vs BDT'" << endl;
-  cout << "b) To get the rates for the combine cards" << endl;
-  cin >> opt;
-
-while(true){
-  switch (opt){
-
-  case 'a':
-     cout << "Calculating Roc curve" << endl;
-     plotRocCurve(f1, f2, f5, f6, f7 /*, h1*/);
-     break;
-   
-  case 'b': 
-    cout << "Getting rates" << endl;
-    getRates(f1, f2, f5, f6, f7 /*, h1*/);
-    break;
-
-  default:
-    break;
-
-}
-}	 
-
-
-
-return;
-
-}
-
-
-
-void plotRocCurve(TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 /*, TH1F *h1*/){
-
-gROOT->ProcessLine(".x tdrstyle.C"); 
-
-//  TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
 // ZZjj_ewk xsec= 0.4404E-03
   TTree *sig = (TTree*)f1->Get("ZZTree/candTree");
   TH1F *hs = (TH1F*)f1->Get("ZZTree/Counters");
 
- // TFile *f2 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_qcd/ZZ4lAnalysis.root");
+  TFile *f2 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_qcd/ZZ4lAnalysis.root");
 // ZZjj_qcd xsec = 9.335E-03 pb
   TTree *bkg = (TTree*)f2->Get("ZZTree/candTree");
-  TH1F *h0 = (TH1F*)f2->Get("ZZTree/Counters");	
+  TH1F *h0 = (TH1F*)f2->Get("ZZTree/Counters"); 
 
-//  TFile *f5 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo2e2mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
+  TFile *f5 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo2e2mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
 //  ggTo2e2mu xsec = 0.0031942 pb
   TTree *bkg1 = (TTree*)f5->Get("ZZTree/candTree");
   TH1F *h5 = (TH1F*)f5->Get("ZZTree/Counters");
 
-//  TFile *f6 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4e_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
+  TFile *f6 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4e_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
 //  ggTo4e  xsec = 0.00158549 pb
   TTree *bkg2 = (TTree*)f6 ->Get("ZZTree/candTree");
   TH1F *h6 = (TH1F*)f6->Get("ZZTree/Counters");
 
-//  TFile *f7 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
+  TFile *f7 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
 //  ggTo4mu xsec = 0.00158549 pb
   TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
   TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
 
-
-
-
-
-
+  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
 
  static const int ncuts = 10;
   float cuts[ncuts];
@@ -123,18 +55,72 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float normBkg2 = Lumi*0.00158549/NgenBkg2;
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
+
+
+
+void mela1() {
+
+
+char opt;
+
+while(true){
+
+  cout << "Enter:" << endl;
+  
+  cout << "a) to get the plot with the ROC curve for MELA vs BDT" << endl;
+  cout << "b) to recalculate the plot with the ROC curve for MELA vs BDT" << endl;
+  cout << "c) To get the rates for the combine cards" << endl;
+  cout << " other to exit" << endl;
+  
+  cin >> opt;
+
+  switch (opt){
+
+  case 'a':
+     cout << "Retrieving Roc curve" << endl;
+     retrieveRocCurve();
+     break;
+   
+  case 'b':
+     cout << "Calculating Roc curve" << endl;
+     plotRocCurve();
+     break;
+
+  case 'c': 
+    cout << "Getting rates" << endl;
+    getRates(/*f1, f2, f5, f6, f7, h1*/);
+    break;
+
+  default:
+    return;
+     
+
+}
+}  
+
+
+return;
+
+}
+
+
+
+void plotRocCurve(){
+
+gROOT->ProcessLine(".x tdrstyle.C"); 
+
    float X,Y,Z,T;
    float Xp[ncuts];
    float Yp[ncuts];   
    float Zp[ncuts];
    float Tp[ncuts];
 
-  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
-  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
+  //TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
+  //TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
   char cutting[400];
   char cutting2[400];
   char cuttingMVA[400];
-
+  
 
 // First (no loop) find the denominators (effsig=X , effbkg=Y)  OBS Here there is a cut on mjj is 100 (fiducial)
 
@@ -143,11 +129,13 @@ gROOT->ProcessLine(".x tdrstyle.C");
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting); 
     float effsig0 = h1->Integral()*normSig;    
     
+
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     float effbkg0 = h1->Integral()*normbkg;
 
     bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg1;
+
 
     bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg2;
@@ -155,9 +143,10 @@ gROOT->ProcessLine(".x tdrstyle.C");
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     effbkg0 =+ h1->Integral()*normBkg3;     
 
+
     X = effbkg0;
-    Y = effsig0;	
-  
+    Y = effsig0;      
+
     //ZZjj_MVA
 
     sig->Draw("ZZjj_MVA >> h1",cutting); 
@@ -174,7 +163,7 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
     bkg3 ->Draw("ZZjj_MVA >> h1",cutting);
     effbkgMVA0 =+ h1->Integral()*normBkg3;
-	
+  
     
     Z = effbkgMVA0;
     T = effsigMVA0;
@@ -185,6 +174,8 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
 // Second (loop) find the numerators (effsig=X , effbkg=Y)   
   for (int i=0; i<ncuts; i++) {
+
+
     cuts[i] = i*0.01;
     sprintf(cutting,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > %f",cuts[i]);
     
@@ -233,7 +224,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
   }
 
-
 float Seff[ncuts];
 float Beff[ncuts];
 float SeffMVA[ncuts];
@@ -248,7 +238,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 //Third: find the point given by the cuts: // (This has already been tested so I comment it) 
-  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+/*  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
     float effsig2 = h1->Integral()*normSig;
@@ -271,7 +261,7 @@ SeffMVA[i]=Tp[i]/T;
     float Y2 = effsig2/Y; //Tmarker is double, TGraph is float
     float X2 = effbkg2/X;
    
-	
+*/  
 
 //Fourth: test see if you produce the same point with the mva
 
@@ -297,11 +287,10 @@ SeffMVA[i]=Tp[i]/T;
 
 
 
-
 TMultiGraph* mg  = new TMultiGraph();
 mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-TMarker *gr2 = new TMarker(X2,Y2,22);
+//TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
 TMarker *gr4 = new TMarker(Z2,T2,21);
    
@@ -320,14 +309,14 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     gr3->SetMaximum(1.07); 
     mg->Add(gr3); 
  
-    gr2->SetMarkerSize(4);
-    gr2->SetMarkerStyle(22);
-    gr4->SetMarkerSize(4);	
+   // gr2->SetMarkerSize(4);
+   // gr2->SetMarkerStyle(22);
+    gr4->SetMarkerSize(4);  
     gr4->SetMarkerStyle(22);
 
 
-    mg->Draw("AL"); 	
-    gr2->Draw("same");
+    mg->Draw("AL");   
+ //   gr2->Draw("same");
     gr4->Draw("same");
 
 
@@ -357,84 +346,30 @@ pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
 pt2->Draw("same");
 
-//To save the plot in a ROOT file
-//TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
-//c1->Write();
-//fout-> Close();
 
-cin >> get();
-cout << "this is a test" << endl;
+//To save the plot in a ROOT file
+TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
+c1->Write();
+fout-> Close();
+
 
 c1->SaveAs("ROCcurve.gif");
 
-  //return;   //OBS I don't want return here, because then the canvas closes! 
+/*
+cout << "press any button to exit" << endl;
+char opt2;
+cin >> opt2;
+*/
+
+return;   //OBS I don't want return here, because then the canvas closes! 
 
 }
 
 
 
-void getRates(TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 /*, TH1F *h1*/){
+void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1*/){
 
-  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
-
-//  TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
-// ZZjj_ewk xsec= 0.4404E-03
-  TTree *sig = (TTree*)f1->Get("ZZTree/candTree");
-  TH1F *hs = (TH1F*)f1->Get("ZZTree/Counters");
-
-//  TFile *f2 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_qcd/ZZ4lAnalysis.root");
-// ZZjj_qcd xsec = 9.335E-03 pb
-  TTree *bkg = (TTree*)f2->Get("ZZTree/candTree");
-  TH1F *h0 = (TH1F*)f2->Get("ZZTree/Counters"); 
-
-//  TFile *f5 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo2e2mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo2e2mu xsec = 0.0031942 pb
-  TTree *bkg1 = (TTree*)f5->Get("ZZTree/candTree");
-  TH1F *h5 = (TH1F*)f5->Get("ZZTree/Counters");
-
-//  TFile *f6 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4e_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo4e  xsec = 0.00158549 pb
-  TTree *bkg2 = (TTree*)f6 ->Get("ZZTree/candTree");
-  TH1F *h6 = (TH1F*)f6->Get("ZZTree/Counters");
-
-//  TFile *f7 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ggTo4mu_Contin_MCFM701_NonWimpy/ZZ4lAnalysis.root");
-//  ggTo4mu xsec = 0.00158549 pb
-  TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
-  TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
-
-
-  static const int ncuts = 101;
-  float cuts[ncuts];
-  float cutsMVA[ncuts];
-
-  float NgenSig = hs->GetBinContent(1);
-  cout << "NgenSig = " << NgenSig << endl;  
-
-  float NgenBKG = h0->GetBinContent(1);
-  cout << "NgenBKG = " << NgenBKG << endl;
-
-  float NgenBkg1 = h5->GetBinContent(1);
-  cout << "NgenBkg 2e2mu = " << NgenBkg1 << endl;  
-
-  float NgenBkg2 = h6->GetBinContent(1);
-  cout << "NgenBkg 4e = " << NgenBkg2 << endl;
-
-  float NgenBkg3 = h7->GetBinContent(1);
-  cout << "NgenBkg 4mu = " << NgenBkg3 << endl;
-
-  
-
-   float Lumi=36.8E03; //Luminosity in pb-1   
-   
-   float normSig= Lumi*0.4404E-03/NgenSig;
-   float normbkg= Lumi*9.335E-03/NgenBKG;
-   float normBkg1= Lumi*0.0031942/NgenBkg1;
-   float normBkg2 = Lumi*0.00158549/NgenBkg2;
-   float normBkg3 = Lumi*0.00158549/NgenBkg3;
-
-
-
- // TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
+  TH1F *h2 = new TH1F("h2","h2",100,0.,1.1);
   char cutting[400];
   char cutting4e[400];
   char cutting4mu[400];
@@ -443,67 +378,68 @@ void getRates(TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 /*, TH1F *h1
 //(no loop) find the rates (effsig=X , effbkg=Y)  OBS the cuts here are: mjj > 100, Zs on shell, 
 //MELA discriminant > 0.66 and then an extra cut to separate eeee, 2e2mu, mumumumu (only needed in one sample) 
 
+sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
 
-sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
+sprintf(cutting4e,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
 
-sprintf(cutting4e,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+sprintf(cutting4mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
 
-sprintf(cutting4mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
-
-sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
 
 
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu); 
-    float rate2e2mu = h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu); 
+    float rate2e2mu = h2->Integral()*normSig;
 
     cout << "Signal rate 2e2mu:" << rate2e2mu << endl;
     
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
-    float rate4e = h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
+    float rate4e = h2->Integral()*normSig;
 
     cout << "Signal rate 4e:" << rate4e << endl;
     
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
-    float rate4mu =  h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
+    float rate4mu =  h2->Integral()*normSig;
     
     cout << "Signal rate 4mu:" << rate4mu << endl;  
 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
-    float ratebkgZZ4e = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4e);
+    float ratebkgZZ4e = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
-    //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl;	
+    //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl; 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
-    float ratebkgZZ4mu = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4mu);
+    float ratebkgZZ4mu = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu);
-    float ratebkgZZ2e2mu = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting2e2mu);
+    float ratebkgZZ2e2mu = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
 
 //bkg1 -> gg to 2e2mu
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    float rategg2e2mu = h1->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg2e2mu = h2->Integral()*normBkg1;
 
     cout << "Bkg rate gg -> 2e2mu:" << rategg2e2mu << endl;
 
 //bkg 2 gg to 4e
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    float rategg4e = h1->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg4e = h2->Integral()*normBkg2;
 
     cout << "Bkg rate gg -> 4e:" << rategg4e << endl;
 
 //bkg3 gg to 4mu
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    float rategg4mu = h1->Integral()*normBkg3;	
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg4mu = h2->Integral()*normBkg3;  
   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
 
 return;
 }
+
+
