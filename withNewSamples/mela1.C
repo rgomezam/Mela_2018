@@ -1,6 +1,5 @@
 #include <RooDataSet.h>
 
-
 //Functions:
 
 void retrieveRocCurve();
@@ -37,7 +36,7 @@ void getRates();
   TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
   TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
 
- static const int ncuts = 10;
+ static const int ncuts = 101;
   float cuts[ncuts];
   float cutsMVA[ncuts];
 
@@ -106,7 +105,6 @@ return;
 
 
 void plotRocCurve(){
-
 gROOT->ProcessLine(".x tdrstyle.C"); 
 
    float X,Y,Z,T;
@@ -115,8 +113,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float Zp[ncuts];
    float Tp[ncuts];
 
-  //TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
-  //TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
   char cutting[400];
   char cutting2[400];
   char cuttingMVA[400];
@@ -288,7 +284,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
-mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
+mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the first entry
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 //TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
@@ -440,6 +436,18 @@ sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
 
 return;
+}
+
+
+
+void retrieveRocCurve(){
+gROOT->ProcessLine(".x tdrstyle.C"); 
+TFile *roc = TFile::Open("ROC_MELA_vs_BDT.root");
+TCanvas *c2 = (TCanvas*)roc->Get("c1"); 
+c1->Draw();
+//roc->Close();
+return;
+
 }
 
 
