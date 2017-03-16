@@ -55,7 +55,7 @@ void getRates();
 
 
 
-void mela1() {
+int main() {
 
 
 char opt;
@@ -96,7 +96,7 @@ char opt;
 //}  
 
 
-return;
+return 0;
 
 }
 

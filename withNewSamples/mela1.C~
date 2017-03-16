@@ -60,11 +60,11 @@ void mela1() {
 
 char opt;
 
-while(true){
+//while(true){
 
   cout << "Enter:" << endl;
   
-  cout << "a) to get the plot with the ROC curve for MELA vs BDT" << endl;
+  cout << "a) to get the plot (previously calculated) with the ROC curve for MELA vs BDT" << endl;
   cout << "b) to recalculate the plot with the ROC curve for MELA vs BDT" << endl;
   cout << "c) To get the rates for the combine cards" << endl;
   cout << " other to exit" << endl;
@@ -93,7 +93,7 @@ while(true){
      
 
 }
-}  
+//}  
 
 
 return;
@@ -235,9 +235,9 @@ SeffMVA[i]=Tp[i]/T;
 }
 
 
-//Third: find the point given by the cuts: // (This has already been tested so I comment it) 
-/*  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
-    
+//Third and fourth: find the point given by the cuts: // (This has already been tested so I comment one of both) 
+  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+/*    
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
     float effsig2 = h1->Integral()*normSig;
    
@@ -290,7 +290,7 @@ mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the fir
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 //TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
-TMarker *gr4 = new TMarker(Z2,T2,21);
+TMarker *gr4 = new TMarker(Z2,T2,22);
    
     gr1->SetLineWidth(7);
     gr1->SetLineColor(kRed);
