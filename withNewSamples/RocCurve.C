@@ -242,7 +242,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
-mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
+mg->SetTitle(" ; #epsilon_{B}; #epsilon_{S}"); //In the first blank we can put a title
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 //TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
@@ -313,6 +313,7 @@ pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
 pt2->Draw("same");
 
+c1->SaveAs("ROCcurve.gif");
 
 TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
 c1->Write();

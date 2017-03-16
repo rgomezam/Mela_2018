@@ -1,6 +1,8 @@
 #include <RooDataSet.h>
 
+//Functions:
 
+<<<<<<< HEAD
 
 
 
@@ -14,6 +16,13 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
 
 
 
+=======
+void retrieveRocCurve();
+void plotRocCurve();
+void getRates();
+
+
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
 //Global Variables:
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
 // ZZjj_ewk xsec= 0.4404E-03
@@ -47,6 +56,13 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
   float cuts[ncuts];
   float cutsMVA[ncuts];
 
+<<<<<<< HEAD
+=======
+  static const int ncuts = 101;
+  float cuts[ncuts];
+  float cutsMVA[ncuts];
+
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
   float NgenSig = hs->GetBinContent(1);
   float NgenBKG = h0->GetBinContent(1);
   float NgenBkg1 = h5->GetBinContent(1);
@@ -66,10 +82,26 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
 
 void mela1() {
 
+<<<<<<< HEAD
 //  TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
 // ZZjj_ewk xsec= 0.4404E-03
 //  TTree *sig = (TTree*)f1->Get("ZZTree/candTree");
 //  TH1F *hs = (TH1F*)f1->Get("ZZTree/Counters");
+=======
+
+char opt;
+
+while(true){
+
+  cout << "Enter:" << endl;
+  
+  cout << "a) to get the plot with the ROC curve for MELA vs BDT" << endl;
+  cout << "b) to recalculate the plot with the ROC curve for MELA vs BDT" << endl;
+  cout << "c) To get the rates for the combine cards" << endl;
+  cout << " other to exit" << endl;
+  
+  cin >> opt;
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
 
 //  TFile *f2 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_qcd/ZZ4lAnalysis.root");
 // ZZjj_qcd xsec = 9.335E-03 pb
@@ -123,6 +155,7 @@ while(true){
     break;
 
   default:
+<<<<<<< HEAD
     break;
 
 }
@@ -138,6 +171,27 @@ return;
 void plotRocCurve(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1*/){
 
 gROOT->ProcessLine(".x tdrstyle.C"); 
+=======
+    return;
+     
+
+}
+}  
+
+
+return;
+
+}
+
+
+
+void plotRocCurve(){
+
+gROOT->ProcessLine(".x tdrstyle.C"); 
+
+  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
 
 /*
   cout << "NgenSig = " << NgenSig << endl;  
@@ -152,8 +206,11 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float Zp[ncuts];
    float Tp[ncuts];
 
+<<<<<<< HEAD
   //TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
   //TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
+=======
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
   char cutting[400];
   char cutting2[400];
   char cuttingMVA[400];
@@ -275,7 +332,11 @@ SeffMVA[i]=Tp[i]/T;
 
 
 //Third: find the point given by the cuts: // (This has already been tested so I comment it) 
+<<<<<<< HEAD
   sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+=======
+/*  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
     float effsig2 = h1->Integral()*normSig;
@@ -298,7 +359,11 @@ SeffMVA[i]=Tp[i]/T;
     float Y2 = effsig2/Y; //Tmarker is double, TGraph is float
     float X2 = effbkg2/X;
    
+<<<<<<< HEAD
   
+=======
+*/  
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
 
 //Fourth: test see if you produce the same point with the mva
 
@@ -325,7 +390,7 @@ SeffMVA[i]=Tp[i]/T;
 
 
 TMultiGraph* mg  = new TMultiGraph();
-mg->SetTitle("Global title; #epsilon_{B}; #epsilon_{S}");
+mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the first entry
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
 TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
@@ -346,14 +411,23 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     gr3->SetMaximum(1.07); 
     mg->Add(gr3); 
  
+<<<<<<< HEAD
     gr2->SetMarkerSize(4);
     gr2->SetMarkerStyle(22);
+=======
+   // gr2->SetMarkerSize(4);
+   // gr2->SetMarkerStyle(22);
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
     gr4->SetMarkerSize(4);  
     gr4->SetMarkerStyle(22);
 
 
     mg->Draw("AL");   
+<<<<<<< HEAD
     gr2->Draw("same");
+=======
+ //   gr2->Draw("same");
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
     gr4->Draw("same");
 
 
@@ -398,11 +472,32 @@ cin >> opt2;
 
 return;   //OBS I don't want return here, because then the canvas closes! 
 
+<<<<<<< HEAD
+}
+=======
+//To save the plot in a ROOT file
+TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
+c1->Write();
+fout-> Close();
+
+
+c1->SaveAs("ROCcurve.gif");
+
+/*
+cout << "press any button to exit" << endl;
+char opt2;
+cin >> opt2;
+*/
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
+
+return;   //OBS I don't want return here, because then the canvas closes! 
+
 }
 
 
 
 void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1*/){
+<<<<<<< HEAD
 /*
   
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -463,6 +558,10 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
 */
 
   TH1F *h1 = new TH1F("h1","h1",100,0.,1.1);
+=======
+
+  TH1F *h2 = new TH1F("h2","h2",100,0.,1.1);
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
   char cutting[400];
   char cutting4e[400];
   char cutting4mu[400];
@@ -471,65 +570,69 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
 //(no loop) find the rates (effsig=X , effbkg=Y)  OBS the cuts here are: mjj > 100, Zs on shell, 
 //MELA discriminant > 0.66 and then an extra cut to separate eeee, 2e2mu, mumumumu (only needed in one sample) 
 
+sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
 
-sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
+sprintf(cutting4e,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
 
-sprintf(cutting4e,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+sprintf(cutting4mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
 
-sprintf(cutting4mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
-
-sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+sprintf(cutting2e2mu,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
 
 
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu); 
-    float rate2e2mu = h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu); 
+    float rate2e2mu = h2->Integral()*normSig;
 
     cout << "Signal rate 2e2mu:" << rate2e2mu << endl;
     
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
-    float rate4e = h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
+    float rate4e = h2->Integral()*normSig;
 
     cout << "Signal rate 4e:" << rate4e << endl;
     
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
-    float rate4mu =  h1->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
+    float rate4mu =  h2->Integral()*normSig;
     
     cout << "Signal rate 4mu:" << rate4mu << endl;  
 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e);
-    float ratebkgZZ4e = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4e);
+    float ratebkgZZ4e = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
     //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl; 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu);
-    float ratebkgZZ4mu = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4mu);
+    float ratebkgZZ4mu = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu);
-    float ratebkgZZ2e2mu = h1->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting2e2mu);
+    float ratebkgZZ2e2mu = h2->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
 
 //bkg1 -> gg to 2e2mu
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    float rategg2e2mu = h1->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg2e2mu = h2->Integral()*normBkg1;
 
     cout << "Bkg rate gg -> 2e2mu:" << rategg2e2mu << endl;
 
 //bkg 2 gg to 4e
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
-    float rategg4e = h1->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg4e = h2->Integral()*normBkg2;
 
     cout << "Bkg rate gg -> 4e:" << rategg4e << endl;
 
 //bkg3 gg to 4mu
+<<<<<<< HEAD
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.05*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting);
     float rategg4mu = h1->Integral()*normBkg3;  
+=======
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting);
+    float rategg4mu = h2->Integral()*normBkg3;  
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
 
@@ -537,6 +640,7 @@ return;
 }
 
 
+<<<<<<< HEAD
 void calculateRocCurve(){
 gROOT->ProcessLine(".x tdrstyle.C"); 
 
@@ -568,6 +672,16 @@ gROOT->ProcessLine(".x tdrstyle.C");
   TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
   TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
 
+=======
+
+void retrieveRocCurve(){
+gROOT->ProcessLine(".x tdrstyle.C"); 
+TFile *roc = TFile::Open("ROC_MELA_vs_BDT.root");
+TCanvas *c1 = (TCanvas*)roc->Get("c1"); 
+c1->Draw();
+//roc->Close();
+return;
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
 
 
 
@@ -856,6 +970,7 @@ fout-> Close();
 }
 
 
+<<<<<<< HEAD
 
 void retrieveRocCurve(){
 
@@ -866,3 +981,5 @@ roc->Close();
 return;
 
 }
+=======
+>>>>>>> ba591090555472137e07e9d89aa26fa3d48a69bd
