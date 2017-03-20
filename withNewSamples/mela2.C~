@@ -479,6 +479,9 @@ void getSystematics() {
   char cutting4eUp[400];
   char cutting4muUp[400];
   char cutting2e2muUp[400];
+  char cutting4eDn[400];
+  char cutting4muDn[400];
+  char cutting2e2muDn[400];
 
 
 //(no loop) find the rates (effsig=X , effbkg=Y)  OBS the cuts here are: mjj > 100, Zs on shell, 

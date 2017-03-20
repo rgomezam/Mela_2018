@@ -294,7 +294,7 @@ SeffMVA[i]=Tp[i]/T;
 TMultiGraph* mg  = new TMultiGraph();
 mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the first entry
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-TMarker *gr2 = new TMarker(X2,Y2,22);
+//TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
 TMarker *gr4 = new TMarker(Z2,T2,22);
    
@@ -321,7 +321,7 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
 
 
     mg->Draw("AL");   
-    gr2->Draw("same");
+    //gr2->Draw("same");
     gr4->Draw("same");
 
 
@@ -372,6 +372,8 @@ fout-> Close();
 
 
 c1->SaveAs("ROCcurve.gif");
+c1->SaveAs("mela_bdt_comparison.pdf");
+
 
 
 return;   //OBS I don't want return here, because then the canvas closes! 
