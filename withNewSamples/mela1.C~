@@ -1,11 +1,12 @@
 #include <RooDataSet.h>
 
+
+
 //Functions:
 
 void retrieveRocCurve();
 void plotRocCurve();
 void getRates();
-
 
 //Global Variables:
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -33,6 +34,9 @@ void getRates();
   TTree *bkg3 = (TTree*)f7 ->Get("ZZTree/candTree");
   TH1F *h7 = (TH1F*)f7->Get("ZZTree/Counters");
 
+  TCanvas * c1 = new TCanvas("c1", "c1", 1000., 1000.);
+  TH1F *h1 = new TH1F("h1","h1",100,-1000.,1000.);
+
 
   static const int ncuts = 101;
   float cuts[ncuts];
@@ -57,7 +61,6 @@ void getRates();
 
 void mela1() {
 
-
 char opt;
 
 //while(true){
@@ -70,9 +73,7 @@ char opt;
   cout << " other to exit" << endl;
   
   cin >> opt;
-
-  switch (opt){
-
+  switch(opt){
   case 'a':
      cout << "Retrieving Roc curve" << endl;
      retrieveRocCurve();
@@ -89,16 +90,16 @@ char opt;
     break;
 
   default:
-    return;
-     
+    break;
 
-}
-//}  
+}  
 
 
 return;
 
 }
+
+
 
 
 
@@ -114,6 +115,7 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float Yp[ncuts];   
    float Zp[ncuts];
    float Tp[ncuts];
+
 
   char cutting[400];
   char cutting2[400];
@@ -235,9 +237,11 @@ SeffMVA[i]=Tp[i]/T;
 }
 
 
+
 //Third and fourth: find the point given by the cuts: // (This has already been tested so I comment one of both) 
   sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
-/*    
+/*  sprintf(cutting2,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
     float effsig2 = h1->Integral()*normSig;
    
@@ -259,7 +263,9 @@ SeffMVA[i]=Tp[i]/T;
     float Y2 = effsig2/Y; //Tmarker is double, TGraph is float
     float X2 = effbkg2/X;
    
+
 */  
+
 
 //Fourth: test see if you produce the same point with the mva
 
@@ -288,7 +294,7 @@ SeffMVA[i]=Tp[i]/T;
 TMultiGraph* mg  = new TMultiGraph();
 mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the first entry
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-//TMarker *gr2 = new TMarker(X2,Y2,22);
+TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
 TMarker *gr4 = new TMarker(Z2,T2,22);
    
@@ -307,6 +313,7 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
     gr3->SetMaximum(1.07); 
     mg->Add(gr3); 
  
+
    // gr2->SetMarkerSize(4);
    // gr2->SetMarkerStyle(22);
     gr4->SetMarkerSize(4);  
@@ -314,7 +321,7 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
 
 
     mg->Draw("AL");   
- //   gr2->Draw("same");
+    gr2->Draw("same");
     gr4->Draw("same");
 
 
@@ -344,6 +351,19 @@ pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
 pt2->Draw("same");
 
+//To save the plot in a ROOT file
+//TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
+//c1->Write();
+//fout-> Close();
+
+
+c1->SaveAs("ROCcurve.gif");
+
+
+cout << "press any button to exit" << endl;
+char opt2;
+cin >> opt2;
+
 
 //To save the plot in a ROOT file
 TFile *fout =new TFile("ROC_MELA_vs_BDT.root", "RECREATE");
@@ -353,11 +373,6 @@ fout-> Close();
 
 c1->SaveAs("ROCcurve.gif");
 
-/*
-cout << "press any button to exit" << endl;
-char opt2;
-cin >> opt2;
-*/
 
 return;   //OBS I don't want return here, because then the canvas closes! 
 
@@ -367,7 +382,9 @@ return;   //OBS I don't want return here, because then the canvas closes!
 
 void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1*/){
 
+
   TH1F *h2 = new TH1F("h2","h2",100,0.,1.1);
+
   char cutting[400];
   char cutting4e[400];
   char cutting4mu[400];
@@ -442,6 +459,7 @@ return;
 
 
 
+
 void retrieveRocCurve(){
 gROOT->ProcessLine(".x tdrstyle.C"); 
 TFile *roc = TFile::Open("ROC_MELA_vs_BDT.root");
@@ -449,7 +467,5 @@ TCanvas *c1 = (TCanvas*)roc->Get("c1");
 c1->Draw();
 //roc->Close();
 return;
-
 }
-
 
