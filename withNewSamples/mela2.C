@@ -501,18 +501,29 @@ sprintf(cutting4muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z
 
 sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
 
+sprintf(cutting4eDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+
+sprintf(cutting4muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+
+sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+
+
 
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting2e2mu); 
     float rate2e2mu = h3->Integral()*normSig;
 
     sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting2e2muUp); 
     float rate2e2muUp = h3->Integral()*normSig;
+
+    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting2e2muDn); 
+    float rate2e2muDn = h3->Integral()*normSig;
     
     cout << "Signal rate 2e2mu: " << rate2e2mu << endl;
-    cout << "Signal rate 2e2muUp: " << rate2e2muUp << endl;
+    cout << "Signal rate 2e2muUp: " << rate2e2muUp << endl; 
+    cout << "Signal rate 2e2muDn: " << rate2e2muDn << endl; 
     
     float DeltaSig2e2mu = (rate2e2muUp -rate2e2mu)/rate2e2mu;
-    cout << "Delta S (2e2mu) " << DeltaSig2e2mu << endl; 
+    cout << "Delta S (2e2mu) [UP]" << DeltaSig2e2mu << endl; 
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4e);
     float rate4e = h3->Integral()*normSig;
@@ -520,11 +531,16 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
     sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4eUp);
     float rate4eUp = h3->Integral()*normSig;
 
+    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4eDn);
+    float rate4eDn = h3->Integral()*normSig;
+
+    
     cout << "Signal rate 4e:" << rate4e << endl;
     cout << "Signal rate 4eUp: " << rate4eUp << endl;
+    cout << "Signal rate 4eDn: " << rate4eDn << endl;
 
     float DeltaSig4e = (rate4eUp -rate4e)/rate4e;
-    cout << "Delta S (4e) " << DeltaSig4e << endl; 
+    cout << "Delta S (4e) [UP]" << DeltaSig4e << endl; 
 
      
     
@@ -534,11 +550,15 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
     sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4muUp);
     float rate4muUp =  h3 ->Integral()*normSig;
 
+     sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4muDn);
+    float rate4muDn =  h3->Integral()*normSig;
+
     cout << "Signal rate 4mu: " << rate4mu << endl;  
     cout << "Signal rate 4muUp: " << rate4muUp << endl;
+    cout << "Signal rate 4muDn: " << rate4muDn << endl;
 
     float DeltaSig4mu = (rate4muUp -rate4mu)/rate4mu;
-    cout << "Delta S (4mu) " << DeltaSig4mu << endl; 
+    cout << "Delta S (4mu) [UP]" << DeltaSig4mu << endl; 
      
 
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4e);
@@ -546,14 +566,18 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
      
     bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4eUp);
     float ratebkgZZ4eUp = h3->Integral()*normbkg;
-   
+
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4eDn);
+    float ratebkgZZ4eDn = h3->Integral()*normbkg;
+
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
     //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl;
     cout << "Bkg rate ZZ -> 4e Up:" << ratebkgZZ4eUp << endl;	
-
+    cout << "Bkg rate ZZ -> 4e Dn:" << ratebkgZZ4eDn << endl;	
+   
 
     float DeltaBkgZZto4e = (ratebkgZZ4eUp - ratebkgZZ4e)/ratebkgZZ4e;
-    cout << "Delta Bkg ZZ (4e) " << DeltaBkgZZto4e << endl; 
+    cout << "Delta Bkg ZZ (4e) [UP]" << DeltaBkgZZto4e << endl; 
 
 
 
@@ -562,12 +586,16 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
     
     bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4muUp);
     float ratebkgZZ4muUp = h3->Integral()*normbkg;
+
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4muDn);
+    float ratebkgZZ4muDn = h3->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     cout << "Bkg rate ZZ -> 4mu Up: " << ratebkgZZ4muUp << endl;
+    cout << "Bkg rate ZZ -> 4mu Dn: " << ratebkgZZ4muDn << endl;
 
     float DeltaBkgZZto4mu = (ratebkgZZ4muUp - ratebkgZZ4mu)/ratebkgZZ4mu;
-    cout << "Delta Bkg ZZ (4mu) " << DeltaBkgZZto4mu << endl; 
+    cout << "Delta Bkg ZZ (4mu) [UP]" << DeltaBkgZZto4mu << endl; 
    
     
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting2e2mu);
@@ -575,12 +603,17 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
 
     bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting2e2muUp);
     float ratebkgZZ2e2muUp = h3->Integral()*normbkg;
-   
+  
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting2e2muDn);
+    float ratebkgZZ2e2muDn = h3->Integral()*normbkg;
+  
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
     cout << "Bkg rate ZZ -> 2e2mu Up:" << ratebkgZZ2e2muUp << endl;
+    cout << "Bkg rate ZZ -> 2e2mu Dn:" << ratebkgZZ2e2muDn << endl;
+ 
 
     float DeltaBkgZZto2e2mu = (ratebkgZZ2e2muUp - ratebkgZZ2e2mu)/ratebkgZZ2e2mu;
-    cout << "Delta Bkg ZZ (2e2mu) " << DeltaBkgZZto2e2mu << endl; 
+    cout << "Delta Bkg ZZ (2e2mu) [UP]" << DeltaBkgZZto2e2mu << endl; 
 
 
 //bkg1 -> gg to 2e2mu
@@ -590,11 +623,15 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
     bkg1->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
     float rategg2e2muUp = h3->Integral()*normBkg1;
 
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
+    float rategg2e2muDn = h3->Integral()*normBkg1;
+
     cout << "Bkg rate gg -> 2e2mu:" << rategg2e2mu << endl;
     cout << "Bkg rate gg -> 2e2mu Up:" << rategg2e2muUp << endl;
-
+    cout << "Bkg rate gg -> 2e2mu Dn:" << rategg2e2muDn << endl;
+    
     float DeltaBkgGGto2e2mu = (rategg2e2muUp - rategg2e2mu)/rategg2e2mu;
-    cout << "Delta Bkg gg (2e2mu) " << DeltaBkgGGto2e2mu << endl; 
+    cout << "Delta Bkg gg (2e2mu) [UP]" << DeltaBkgGGto2e2mu << endl; 
 
 
 //bkg 2 gg to 4e
@@ -604,12 +641,15 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
     bkg2->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
     float rategg4eUp = h3->Integral()*normBkg2;
 
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
+    float rategg4eDn = h3->Integral()*normBkg2;
+
     cout << "Bkg rate gg -> 4e:" << rategg4e << endl;
     cout << "Bkg rate gg -> 4e Up:" << rategg4eUp << endl;
-
+    cout << "Bkg rate gg -> 4e Dn:" << rategg4eDn << endl;
     
     float DeltaBkgGGto4e = (rategg4eUp - rategg4e)/rategg4e;
-    cout << "Delta Bkg gg (4e) " << DeltaBkgGGto4e << endl; 
+    cout << "Delta Bkg gg (4e) [UP]" << DeltaBkgGGto4e << endl; 
 
 
 
@@ -619,18 +659,21 @@ sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. &&
 
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
     float rategg4muUp = h3->Integral()*normBkg3;	
-  
+
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
+    float rategg4muDn = h3->Integral()*normBkg3;	
+   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
     cout << "Bkg rate gg -> 4mu Up:" << rategg4muUp << endl;
-   
+    cout << "Bkg rate gg -> 4mu Dn:" << rategg4muDn << endl;
     
     float DeltaBkgGGto4mu = (rategg4muUp - rategg4mu)/rategg4mu;
-    cout << "Delta Bkg gg (4mu) " << DeltaBkgGGto4mu << endl;
+    cout << "Delta Bkg gg (4mu) [UP]" << DeltaBkgGGto4mu << endl;
 
     
 
 
-
+return;
 
 }
 
