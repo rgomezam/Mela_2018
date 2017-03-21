@@ -74,7 +74,7 @@ char opt;
   cout << "b) to recalculate the plot with the ROC curve for MELA vs BDT" << endl;
   cout << "c) To get the rates for the combine cards" << endl;
   cout << "d) To get the systematics for the combine cards" << endl;
-  cout << "e) To get the background stats. for the combine cards" << endl;
+  cout << "e) To get the MC stats. for the combine cards" << endl;
   cout << " other to exit" << endl;
   
   cin >> opt;
@@ -100,7 +100,7 @@ char opt;
     break;
 
 case 'e':
-    cout << "Getting bkg stats" << endl;
+    cout << "Getting MC stats" << endl;
     getBkgStat();
     break;
 
