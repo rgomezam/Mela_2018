@@ -1,0 +1,22 @@
+imax 1  number of channels
+jmax 4  number of backgrounds plus signals minus 1
+kmax *  number of nuisance parameters
+------------
+bin            1
+observation    121
+------------
+bin                     1        1          1              1             1       
+process                 ZZTo4L   GluGluZZ   ZZJJTo4L_EWK   irreducible   fake    
+process                 -2       -1         0              1             2       
+rate                    98.762   20.091     0.979          1.440         1.076   
+------------
+bkgStat           lnN   -        -          -              -             1.492   
+mEff              lnN   1.023    1.022      1.033          1.031         -       
+scale             lnN   1.010    1.010      1.010          1.010         -       
+mEnergy           lnN   1.000    1.000      1.000          1.000         -       
+pu                lnN   1.006    1.006      1.006          1.028         -       
+met               lnN   -        -          -              -             1.010   
+mFR               lnN   -        -          -              -             1.148   
+trigger           lnN   1.020    1.020      1.020          1.020         -       
+pdf               lnN   1.010    1.010      1.010          1.010         -       
+mcStat_mmmm       lnN   1.006    1.002      1.002          1.086         -       

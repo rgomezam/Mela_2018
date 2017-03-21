@@ -1,0 +1,29 @@
+Combination of eeee=/afs/cern.ch/user/n/nawoods/ZZTools/Analysis/savedResults/combineCard_eeee.txt  eemm=/afs/cern.ch/user/n/nawoods/ZZTools/Analysis/savedResults/combineCard_eemm.txt  mmmm=/afs/cern.ch/user/n/nawoods/ZZTools/Analysis/savedResults/combineCard_mmmm.txt
+imax 3 number of bins
+jmax 4 number of processes minus 1
+kmax 16 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+bin          eeee   eemm   mmmm 
+observation  80.0   202.0  121.0
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             eeee          eeee          eeee          eeee          eeee          eemm          eemm          eemm          eemm          eemm          mmmm          mmmm          mmmm          mmmm          mmmm        
+process                         GluGluZZ      ZZTo4L        ZZJJTo4L_EWK  fake          irreducible   GluGluZZ      ZZTo4L        ZZJJTo4L_EWK  fake          irreducible   GluGluZZ      ZZTo4L        ZZJJTo4L_EWK  fake          irreducible 
+process                         -2            -1            0             1             2             -2            -1            0             1             2             -2            -1            0             1             2           
+rate                            11.9590       59.7570       0.5750        4.5100        1.1290        31.6410       154.3470      1.5140        7.7320        2.4350        20.0910       98.7620       0.9790        1.0760        1.4400      
+----------------------------------------------------------------------------------------------------------------------------------
+bkgStat                 lnN     -             -             -             1.205         -             -             -             -             1.144         -             -             -             -             1.492         -           
+eEff                    lnN     1.102         1.101         1.1           -             1.11          1.051         1.05          1.05          -             1.059         -             -             -             -             -           
+eFR                     lnN     -             -             -             1.134         -             -             -             -             1.091         -             -             -             -             -             -           
+ePhiRes                 lnN     1.001         1.001         1.001         -             1.017         1.0           1.0           1.0           -             1.003         -             -             -             -             -           
+eRhoRes                 lnN     1.001         1.0           1.0           -             1.006         1.0           1.0           1.0           -             1.003         -             -             -             -             -           
+eScale                  lnN     1.0           1.0           1.0           -             1.008         1.0           1.0           1.0           -             1.004         -             -             -             -             -           
+mEff                    lnN     -             -             -             -             -             1.011         1.011         1.016         -             1.016         1.022         1.023         1.033         -             1.031       
+mFR                     lnN     -             -             -             -             -             -             -             -             1.082         -             -             -             -             1.148         -           
+mcStat_eeee             lnN     1.002         1.007         1.002         -             1.1           -             -             -             -             -             -             -             -             -             -           
+mcStat_eemm             lnN     -             -             -             -             -             1.001         1.005         1.002         -             1.061         -             -             -             -             -           
+mcStat_mmmm             lnN     -             -             -             -             -             -             -             -             -             -             1.002         1.006         1.002         -             1.086       
+met                     lnN     -             -             -             1.01          -             -             -             -             1.01          -             -             -             -             1.01          -           
+pdf                     lnN     1.01          1.01          1.01          -             1.01          1.01          1.01          1.01          -             1.01          1.01          1.01          1.01          -             1.01        
+pu                      lnN     1.008         1.007         1.009         -             1.047         1.007         1.008         1.007         -             1.004         1.006         1.006         1.006         -             1.028       
+scale                   lnN     1.01          1.01          1.01          -             1.01          1.01          1.01          1.01          -             1.01          1.01          1.01          1.01          -             1.01        
+trigger                 lnN     1.02          1.02          1.02          -             1.02          1.02          1.02          1.02          -             1.02          1.02          1.02          1.02          -             1.02        
