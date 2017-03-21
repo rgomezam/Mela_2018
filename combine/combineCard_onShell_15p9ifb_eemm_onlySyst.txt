@@ -1,27 +1,19 @@
+# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZemuemu) -> Only JetEnScale corrections inlcuded 
+#
+#
+
+
 imax 1  number of channels
-jmax 4  number of backgrounds plus signals minus 1
+jmax 2  number of backgrounds plus signals minus 1
 kmax *  number of nuisance parameters
 ------------
 bin            1
-observation    202
+observation    -1
 ------------
-bin                     1        1          1              1             1       
-process                 ZZTo4L   GluGluZZ   ZZJJTo4L_EWK   irreducible   fake    
-process                 -2       -1         0              1             2       
-rate                    154.347  31.641     1.514          2.435         7.732   
+bin                             1		        1        	  1              
+process                 ZZTo4L   GluGluZZ   ZZJJTo4L_EWK   
+process                       1			2		  0       
+rate                    2.15969		1.47604      2.08641
 ------------
-bkgStat           lnN   -        -          -              -             1.144   
-mEff              lnN   1.011    1.011      1.016          1.016         -       
-eScale            lnN   1.000    1.000      1.000          1.004         -       
-mEnergy           lnN   1.000    1.000      1.000          1.000         -       
-pu                lnN   1.008    1.007      1.007          1.004         -       
-trigger           lnN   1.020    1.020      1.020          1.020         -       
-eEff              lnN   1.050    1.051      1.050          1.059         -       
-ePhiRes           lnN   1.000    1.000      1.000          1.003         -       
-mcStat_eemm       lnN   1.005    1.001      1.002          1.061         -       
-eRhoRes           lnN   1.000    1.000      1.000          1.003         -       
-met               lnN   -        -          -              -             1.010   
-mFR               lnN   -        -          -              -             1.082   
-scale             lnN   1.010    1.010      1.010          1.010         -       
-pdf               lnN   1.010    1.010      1.010          1.010         -       
-eFR               lnN   -        -          -              -             1.091   
+             
+jetEnScale    lnN  1.0564087   1.059497  1.0115678
