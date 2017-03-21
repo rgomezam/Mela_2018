@@ -9,7 +9,7 @@ void plotRocCurve();
 void getRates();
 void getSystematics();
 void getBkgStat() ;
-
+void SetCuts();
 
 //Global Variables:
   TFile *f1 = TFile::Open("root://eoscms//eos/cms//store/user/covarell/vbsTrees/170210/ZZjj_ewk/ZZ4lAnalysis.root");
@@ -60,22 +60,29 @@ void getBkgStat() ;
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
 char cutting[400];
-sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. ");
+char cuttingCandC[400];
 char cutting66[400];
-sprintf(cutting66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
 char cutting4e66[400];
-sprintf(cutting4e66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
 char cutting4mu66[400];
-sprintf(cutting4mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
 char cutting2e2mu66[400];
-sprintf(cutting2e2mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+char cuttingUp[400];
+char cutting4eUp[400];
+char cutting4muUp[400];
+char cutting2e2muUp[400];
+char cuttingDn[400]; 
+char cutting4eDn[400];
+char cutting4muDn[400];
+char cutting2e2muDn[400];
 
 
 void mela2() {
 
 char opt;
 
+SetCuts(); //Allocate all the cutting functions
+
 //while(true){
+   cout << "normSig" <<  normSig << endl; // This is a test
 
   cout << "Enter:" << endl;
   
@@ -147,8 +154,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
   
 
 // First (no loop) find the denominators (effsig=X , effbkg=Y)  OBS Here there is a cut on mjj is 100 (fiducial)
-
-    
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting); 
     float effsig0 = h1->Integral()*normSig;    
@@ -198,7 +203,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
 // Second (loop) find the numerators (effsig=X , effbkg=Y)   
   for (int i=0; i<ncuts; i++) {
-
 
     cuts[i] = i*0.01;
     sprintf(cuttingi,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > %f",cuts[i]);
@@ -263,7 +267,6 @@ SeffMVA[i]=Tp[i]/T;
 
 
 //Third and fourth: find the point given by the cuts: // (This has already been tested so I comment one of both) 
-  sprintf(cuttingCandC,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
 /*  
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2);
     float effsig2 = h1->Integral()*normSig;
@@ -384,7 +387,7 @@ fout-> Close();
 c1->SaveAs("ROCcurve.gif");
 c1->SaveAs("ROCcurve.pdf");
 
-return;   //OBS I don't want return here, because then the canvas closes! 
+return; 
 
 }
 
@@ -393,65 +396,59 @@ return;   //OBS I don't want return here, because then the canvas closes!
 void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1*/){
 
 
-  TH1F *h2 = new TH1F("h2","h2",100,0.,1.1);
-
 //(no loop) find the rates (effsig=X , effbkg=Y)  OBS the cuts here are: mjj > 100, Zs on shell, 
 //MELA discriminant > 0.66 and then an extra cut to separate eeee, 2e2mu, mumumumu (only needed in one sample) 
 
 
-
-
-
-
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu66); 
-    float rate2e2mu = h2->Integral()*normSig;
+    float rate2e2mu = h1->Integral()*normSig;
 
     cout << "Signal rate 2e2mu:" << rate2e2mu << endl;
     
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e66);
-    float rate4e = h2->Integral()*normSig;
+    float rate4e = h1->Integral()*normSig;
 
     cout << "Signal rate 4e:" << rate4e << endl;
     
     
     sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu66);
-    float rate4mu =  h2->Integral()*normSig;
+    float rate4mu =  h1->Integral()*normSig;
     
     cout << "Signal rate 4mu:" << rate4mu << endl;  
 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4e66);
-    float ratebkgZZ4e = h2->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e66);
+    float ratebkgZZ4e = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
     //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl; 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting4mu66);
-    float ratebkgZZ4mu = h2->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu66);
+    float ratebkgZZ4mu = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting2e2mu66);
-    float ratebkgZZ2e2mu = h2->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu66);
+    float ratebkgZZ2e2mu = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
 
 //bkg1 -> gg to 2e2mu
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting66);
-    float rategg2e2mu = h2->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg2e2mu = h1->Integral()*normBkg1;
 
     cout << "Bkg rate gg -> 2e2mu:" << rategg2e2mu << endl;
 
 //bkg 2 gg to 4e
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting66);
-    float rategg4e = h2->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg4e = h1->Integral()*normBkg2;
 
     cout << "Bkg rate gg -> 4e:" << rategg4e << endl;
 
 //bkg3 gg to 4mu
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h2",cutting66);
-    float rategg4mu = h2->Integral()*normBkg3;  
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg4mu = h1->Integral()*normBkg3;  
   
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
 
@@ -476,50 +473,17 @@ return;
 
 void getSystematics() {
 
-
-  TH1F *h3 = new TH1F("h3","h3",100,0.,1.1);
-
-  char cuttingUp[400];
-  char cutting4eUp[400];
-  char cutting4muUp[400];
-  char cutting2e2muUp[400];
-  char cuttingDn[400]; 
-  char cutting4eDn[400];
-  char cutting4muDn[400];
-  char cutting2e2muDn[400];
-
-
 //(no loop) find the rates (effsig=X , effbkg=Y)  OBS the cuts here are: mjj > 100, Zs on shell, 
 //MELA discriminant > 0.66 and then an extra cut to separate eeee, 2e2mu, mumumumu (only needed in one sample) 
 
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu66); 
+    float rate2e2mu = h1->Integral()*normSig;
 
+    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting2e2muUp); 
+    float rate2e2muUp = h1->Integral()*normSig;
 
-sprintf(cuttingUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66");
-
-sprintf(cutting4eUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
-
-sprintf(cutting4muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
-
-sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
-
-sprintf(cuttingDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66");
-
-sprintf(cutting4eDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
-
-sprintf(cutting4muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
-
-sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
-
-
-
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting2e2mu66); 
-    float rate2e2mu = h3->Integral()*normSig;
-
-    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting2e2muUp); 
-    float rate2e2muUp = h3->Integral()*normSig;
-
-    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting2e2muDn); 
-    float rate2e2muDn = h3->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting2e2muDn); 
+    float rate2e2muDn = h1->Integral()*normSig;
     
     cout << "Signal rate 2e2mu: " << rate2e2mu << endl;
     cout << "Signal rate 2e2muUp: " << rate2e2muUp << endl; 
@@ -528,14 +492,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
     float DeltaSig2e2mu = (rate2e2muUp -rate2e2mu)/rate2e2mu;
     cout << "Delta S (2e2mu) [UP]" << DeltaSig2e2mu << endl; 
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4e66);
-    float rate4e = h3->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e66);
+    float rate4e = h1->Integral()*normSig;
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4eUp);
-    float rate4eUp = h3->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting4eUp);
+    float rate4eUp = h1->Integral()*normSig;
 
-    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4eDn);
-    float rate4eDn = h3->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting4eDn);
+    float rate4eDn = h1->Integral()*normSig;
 
     
     cout << "Signal rate 4e:" << rate4e << endl;
@@ -547,14 +511,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
 
      
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4mu66);
-    float rate4mu =  h3->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu66);
+    float rate4mu =  h1->Integral()*normSig;
     
-    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4muUp);
-    float rate4muUp =  h3 ->Integral()*normSig;
+    sig->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting4muUp);
+    float rate4muUp =  h1 ->Integral()*normSig;
 
-     sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4muDn);
-    float rate4muDn =  h3->Integral()*normSig;
+     sig->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting4muDn);
+    float rate4muDn =  h1->Integral()*normSig;
 
     cout << "Signal rate 4mu: " << rate4mu << endl;  
     cout << "Signal rate 4muUp: " << rate4muUp << endl;
@@ -564,14 +528,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
     cout << "Delta S (4mu) [UP]" << DeltaSig4mu << endl; 
      
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4e66);
-    float ratebkgZZ4e = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4e66);
+    float ratebkgZZ4e = h1->Integral()*normbkg;
      
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4eUp);
-    float ratebkgZZ4eUp = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting4eUp);
+    float ratebkgZZ4eUp = h1->Integral()*normbkg;
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4eDn);
-    float ratebkgZZ4eDn = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting4eDn);
+    float ratebkgZZ4eDn = h1->Integral()*normbkg;
 
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
     //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl;
@@ -584,14 +548,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
 
 
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting4mu66);
-    float ratebkgZZ4mu = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu66);
+    float ratebkgZZ4mu = h1->Integral()*normbkg;
     
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting4muUp);
-    float ratebkgZZ4muUp = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting4muUp);
+    float ratebkgZZ4muUp = h1->Integral()*normbkg;
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting4muDn);
-    float ratebkgZZ4muDn = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting4muDn);
+    float ratebkgZZ4muDn = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4mu:" << ratebkgZZ4mu << endl;
     cout << "Bkg rate ZZ -> 4mu Up: " << ratebkgZZ4muUp << endl;
@@ -601,14 +565,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
     cout << "Delta Bkg ZZ (4mu) [UP]" << DeltaBkgZZto4mu << endl; 
    
     
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting2e2mu66);
-    float ratebkgZZ2e2mu = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu66);
+    float ratebkgZZ2e2mu = h1->Integral()*normbkg;
 
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cutting2e2muUp);
-    float ratebkgZZ2e2muUp = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cutting2e2muUp);
+    float ratebkgZZ2e2muUp = h1->Integral()*normbkg;
   
-    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cutting2e2muDn);
-    float ratebkgZZ2e2muDn = h3->Integral()*normbkg;
+    bkg->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cutting2e2muDn);
+    float ratebkgZZ2e2muDn = h1->Integral()*normbkg;
   
     cout << "Bkg rate ZZ -> 2e2mu:" << ratebkgZZ2e2mu << endl;
     cout << "Bkg rate ZZ -> 2e2mu Up:" << ratebkgZZ2e2muUp << endl;
@@ -620,14 +584,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
 
 
 //bkg1 -> gg to 2e2mu
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting66);
-    float rategg2e2mu = h3->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg2e2mu = h1->Integral()*normBkg1;
 
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
-    float rategg2e2muUp = h3->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
+    float rategg2e2muUp = h1->Integral()*normBkg1;
 
-    bkg1->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
-    float rategg2e2muDn = h3->Integral()*normBkg1;
+    bkg1->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cuttingDn);
+    float rategg2e2muDn = h1->Integral()*normBkg1;
 
     cout << "Bkg rate gg -> 2e2mu:" << rategg2e2mu << endl;
     cout << "Bkg rate gg -> 2e2mu Up:" << rategg2e2muUp << endl;
@@ -638,14 +602,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
 
 
 //bkg 2 gg to 4e
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting66);
-    float rategg4e = h3->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg4e = h1->Integral()*normBkg2;
 
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
-    float rategg4eUp = h3->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
+    float rategg4eUp = h1->Integral()*normBkg2;
 
-    bkg2->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
-    float rategg4eDn = h3->Integral()*normBkg2;
+    bkg2->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cuttingDn);
+    float rategg4eDn = h1->Integral()*normBkg2;
 
     cout << "Bkg rate gg -> 4e:" << rategg4e << endl;
     cout << "Bkg rate gg -> 4e Up:" << rategg4eUp << endl;
@@ -657,14 +621,14 @@ sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 1
 
 
 //bkg3 gg to 4mu
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h3",cutting66);
-    float rategg4mu = h3->Integral()*normBkg3;
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
+    float rategg4mu = h1->Integral()*normBkg3;
 
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h3",cuttingUp);
-    float rategg4muUp = h3->Integral()*normBkg3;	
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1",cuttingUp);
+    float rategg4muUp = h1->Integral()*normBkg3;	
 
-    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h3",cuttingDn);
-    float rategg4muDn = h3->Integral()*normBkg3;	
+    bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1",cuttingDn);
+    float rategg4muDn = h1->Integral()*normBkg3;	
    
     cout << "Bkg rate gg -> 4mu:" << rategg4mu << endl;
     cout << "Bkg rate gg -> 4mu Up:" << rategg4muUp << endl;
@@ -684,8 +648,6 @@ return;
 
 
 void getBkgStat() {
-
-  TH1F *h1 = new TH1F("h1","h1",100,-1000,1000);
 
 //Find the real number of events.  OBS the cuts here are: mjj > 100, Zs on shell, 
 //MELA discriminant > 0.66 and then an extra cut to separate eeee, 2e2mu, mumumumu
@@ -771,4 +733,39 @@ return;
 
 }
 
+
+void SetCuts(){
+
+//char cuttingCandC[400];
+sprintf(cuttingCandC,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
+//char cutting[400];
+sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. ");
+//char cutting66[400];
+sprintf(cutting66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
+//char cutting4e66[400];
+sprintf(cutting4e66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+//char cutting4mu66[400];
+sprintf(cutting4mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+//char cutting2e2mu66[400];
+sprintf(cutting2e2mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+
+sprintf(cuttingUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66");
+
+sprintf(cutting4eUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+
+sprintf(cutting4muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+
+sprintf(cutting2e2muUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+
+sprintf(cuttingDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66");
+
+sprintf(cutting4eDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+
+sprintf(cutting4muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+
+sprintf(cutting2e2muDn,"nCleanedJetsPt30_jecDn > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+
+
+return;
+}
 
