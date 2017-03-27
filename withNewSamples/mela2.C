@@ -1,6 +1,6 @@
 #include <RooDataSet.h>
-
-
+#include <string.h> //strncat
+#include <cmath> // abs
 
 //Functions:
 
@@ -10,6 +10,7 @@ void getRates();
 void getSystematics();
 void getBkgStat() ;
 void SetCuts();
+void SetCutsPDF(int n);
 void scaleVariations();
 
 
@@ -84,7 +85,7 @@ char opt;
 SetCuts(); //Allocate all the cutting functions
 
 //while(true){
-   cout << "normSig" <<  normSig << endl; // This is a test
+  cout << "normSig" <<  normSig << endl; // This is a test
 
   cout << "Enter:" << endl;
   
@@ -94,6 +95,7 @@ SetCuts(); //Allocate all the cutting functions
   cout << "d) To get the systematics for the combine cards" << endl;
   cout << "e) To get the MC stats. for the combine cards" << endl;
   cout << "f) To test PDF scale variations" << endl;
+  cout << "g) to test the PDF functions" << endl;
   cout << " other to exit" << endl;
   
   cin >> opt;
@@ -128,6 +130,12 @@ case 'f':
     scaleVariations();
     break;
 
+case 'g':
+   cout << "testingPDF" << endl;
+   for (int n=0; n<9; n++){
+   //SetCutsPDF(n, );
+   }
+   break;
 
   default:
     break;
@@ -749,14 +757,15 @@ void SetCuts(){
 sprintf(cuttingCandC,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && abs(DiJetDEta) > 2.5 && DiJetMass > 400. ");
 //char cutting[400];
 sprintf(cutting,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. ");
+
 //char cutting66[400];
-sprintf(cutting66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66");
+sprintf(cutting66,"(nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66)");
 //char cutting4e66[400];
-sprintf(cutting4e66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121)");
+sprintf(cutting4e66,"(nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -121 && Z2Flav == -121))");
 //char cutting4mu66[400];
-sprintf(cutting4mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169)");
+sprintf(cutting4mu66,"(nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && (Z1Flav == -169 && Z2Flav == -169))");
 //char cutting2e2mu66[400];
-sprintf(cutting2e2mu66,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169))");
+sprintf(cutting2e2mu66,"(nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) > 0.66 && ((Z1Flav == -169 && Z2Flav == -121) || (Z1Flav == -121 && Z2Flav == -169)))");
 
 sprintf(cuttingUp,"nCleanedJetsPt30 > 1 && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && DiJetMass > 100. && p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) > 0.66");
 
@@ -780,86 +789,216 @@ return;
 
 
 
+void SetCutsPDF(int n){
+
+SetCuts();
+
+char scale[9][400] ={"*LHEweight_QCDscale_muR1_muF1", "*LHEweight_QCDscale_muR1_muF2","*LHEweight_QCDscale_muR1_muF0p5", "*LHEweight_QCDscale_muR2_muF1",  "*LHEweight_QCDscale_muR2_muF2",  "*LHEweight_QCDscale_muR2_muF0p5", "*LHEweight_QCDscale_muR0p5_muF1", "*LHEweight_QCDscale_muR0p5_muF2", "*LHEweight_QCDscale_muR0p5_muF0p5"};
+
+
+//strncat(cutting66, scale[n], 100);
+strncat(cutting4e66, scale[n], 100);
+strncat(cutting4mu66, scale[n], 100);
+strncat(cutting2e2mu66, scale[n], 100);
+
+/*
+strcpy(cutting66, str2[0].c_str());
+strcpy(cutting4e66, str2[1].c_str());
+strcpy(cutting4mu66, str2[2].c_str());
+strcpy(cutting2e2mu66, str2[3].c_str());
+
+cout << cutting66 << endl;
+cout << cutting4e66 << endl;
+cout << cutting4mu66 << endl;
+cout << cutting2e2mu66 << endl;
+*/
+
+return;
+}
+
+
 void scaleVariations(){
 
-float sigVar[24];
-
-string scale[] ={"LHEweight_QCDscale_muR1_muF1", "LHEweight_QCDscale_muR1_muF2","LHEweight_QCDscale_muR1_muF0p5", "LHEweight_QCDscale_muR2_muF1",  "LHEweight_QCDscale_muR2_muF2",  "LHEweight_QCDscale_muR2_muF0p5", "LHEweight_QCDscale_muR0p5_muF1", "LHEweight_QCDscale_muR0p5_muF2", "LHEweight_QCDscale_muR0p5_muF0p5"};
+float sigVar2e2mu[9];
+float sigVar4e[9];
+float sigVar4mu[9];
+float BkgZZVar2e2mu[9];
+float BkgZZVar4e[9];
+float BkgZZVar4mu[9];
+float BkgGGVar2e2mu[9];
+float BkgGGVar4e[9];
+float BkgGGVar4mu[9];
 
 
 //LHEweight_QCDscale_muR1_muF1 is the trivial one 
-for (int i=0; i < 8; i++){
-    
+for (int i=0; i < 9; i++){
 
-    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal)) >> h1",(cutting2e2mu66)); 
+SetCutsPDF(i);
 
-    sigVar[i] = h1->Integral();
-    cout << "Signal variation 2e2mu" << i << ": " << sigVar[i] << endl;
+
+cout << "cutting =  " << cutting2e2mu66 << endl;
+
+
+    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal)) >> h1", cutting2e2mu66); 
+
+    sigVar2e2mu[i] = h1->Integral();
+    cout << "Signal variation 2e2mu: " << sigVar2e2mu[i] << endl;
 
     
-    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal))*scale[i] >> h1",cutting4e66);
+    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal)) >> h1",cutting4e66);
     
-    sigVar[i+8] = h1->Integral();
-    cout << "Signal variation 4e " << i+7 << ": " << sigVar[i+7] << endl;
+    sigVar4e[i] = h1->Integral();
+    cout << "Signal variation 4e : " << sigVar4e[i] << endl;
     
  
-    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal))*scale[i] >> h1",cutting4mu66);
+    sig->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal)) >> h1",cutting4mu66);
     
-    sigVar[i+16] = h1->Integral();
-    cout << "Signal variation 4mu" << i+16 << ":" << sigVar[i+16] << endl;
+    sigVar4mu[i] = h1->Integral();
+    cout << "Signal variation 4mu:" << sigVar4mu[i] << endl;
     
 
     bkg->Draw("(p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal))*LHEweight_QCDscale_muR1_muF2 >> h1",cutting4e66);
     
-    float NbkgZZto4e = h1->Integral();
-    cout << "ZZ Bkg events 4e: " << NbkgZZto4e << endl;
+    BkgZZVar4e[i] = h1->Integral();
+    cout << "ZZ Bkg variation 4e: " << BkgZZVar4e[i] << endl;
     
-    float errZZto4e = 1/sqrt(NbkgZZto4e);
-    cout << "ZZ bkg error 4e: " << errZZto4e << endl;	
+//    float errZZto4e = 1/sqrt(NbkgZZto4e);
+//    cout << "ZZ bkg error 4e: " << errZZto4e << endl;	
 
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting4mu66);
     
-    float NbkgZZto4mu = h1->Integral();
-    cout << "ZZ Bkg events 4mu: " << NbkgZZto4mu << endl;
+    BkgZZVar4mu[i] = h1->Integral();
+    cout << "ZZ Bkg variation 4mu: " << BkgZZVar4mu[i] << endl;
     
-    float errZZto4mu = 1/sqrt(NbkgZZto4mu);
-    cout << "ZZ bkg error 4mu: " << errZZto4mu << endl;
+//    float errZZto4mu = 1/sqrt(NbkgZZto4mu);
+//    cout << "ZZ bkg error 4mu: " << errZZto4mu << endl;
     
     bkg->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting2e2mu66);
     
-    float NbkgZZto2e2mu = h1->Integral();
-    cout << "ZZ Bkg events 2e2mu: " << NbkgZZto2e2mu << endl;
+    BkgZZVar2e2mu[i] = h1->Integral();
+    cout << "ZZ Bkg variation 2e2mu: " << BkgZZVar2e2mu[i] << endl;
     
-    float errZZto2e2mu = 1/sqrt(NbkgZZto2e2mu);
-    cout << "ZZ bkg error 2e2mu: " << errZZto2e2mu << endl;
+//    float errZZto2e2mu = 1/sqrt(NbkgZZto2e2mu);
+//    cout << "ZZ bkg error 2e2mu: " << errZZto2e2mu << endl;
 
 //bkg1 -> gg to 2e2mu
     bkg1->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
     
-    float NbkgGGto2e2mu = h1->Integral();
-    cout << "GG Bkg events 2e2mu: " << NbkgGGto2e2mu << endl;
+    BkgGGVar2e2mu[i] = h1->Integral();
+    cout << "GG Bkg variation 2e2mu: " << BkgGGVar2e2mu[i] << endl;
     
-    float errGGto2e2mu = 1/sqrt(NbkgGGto2e2mu);
-    cout << "GG bkg error 2e2mu: " << errGGto2e2mu << endl;
+//    float errGGto2e2mu = 1/sqrt(NbkgGGto2e2mu);
+//    cout << "GG bkg error 2e2mu: " << errGGto2e2mu << endl;
 
 //bkg 2 gg to 4e
     bkg2->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
     
-    float NbkgGGto4e = h1->Integral();
-    cout << "GG Bkg events 4e: " << NbkgGGto4e << endl;
+    BkgGGVar4e[i] = h1->Integral();
+    cout << "GG Bkg variation 4e: " << BkgGGVar4e[i] << endl;
     
-    float errGGto4e = 1/sqrt(NbkgGGto4e);
-    cout << "GG bkg error 4e: " << errGGto4e << endl;
+//    float errGGto4e = 1/sqrt(NbkgGGto4e);
+//    cout << "GG bkg error 4e: " << errGGto4e << endl;
 
 //bkg3 gg to 4mu
     bkg3 ->Draw("p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1",cutting66);
     
-    float NbkgGGto4mu = h1->Integral();
-    cout << "GG Bkg events 4mu: " << NbkgGGto4mu << endl;
+    BkgGGVar4mu[i] = h1->Integral();
+    cout << "GG Bkg variation 4mu: " << BkgGGVar4mu[i] << endl;
     
-    float errGGto4mu = 1/sqrt(NbkgGGto4mu);
-    cout << "GG bkg error 4mu: " << errGGto4mu << endl;
+//    float errGGto4mu = 1/sqrt(NbkgGGto4mu);
+//   cout << "GG bkg error 4mu: " << errGGto4mu << endl;
+
 } //end of for
+
+
+
+cout << "Find the maximum variations: " << endl;
+float max2e2mu,max4e,max4mu, tmp1,tmp2,tmp3;
+
+//Signal
+for (int i=1; i<9 ; i++){
+tmp1 = abs(sigVar2e2mu[i]-sigVar2e2mu[0])/sigVar2e2mu[0];
+tmp2 = abs(sigVar4e[i]-sigVar4e[0])/sigVar4e[0];
+tmp3 = abs(sigVar4mu[i]-sigVar4mu[0])/sigVar4mu[0];
+
+if (tmp1 >= max2e2mu){
+max2e2mu = tmp1;
+}
+
+if (tmp2 >= max4e){
+max4e = tmp2;
+}
+
+if (tmp3 >= max4mu){
+max4mu = tmp3;
+}
+
+}
+
+cout << "max Signal variations: " << endl;
+cout << "2e2mu: " << max2e2mu << endl;
+cout << "4e: " << max4e << endl;
+cout << "4mu: " << max4mu << endl;
+
+
+// ZZ Background
+max2e2mu = 0;
+max4e = 0;
+max4mu = 0;
+
+for (int i=1; i<9 ; i++){
+tmp1 = abs(BkgZZVar2e2mu[i]-BkgZZVar2e2mu[0])/BkgZZVar2e2mu[0];
+tmp2 = abs(BkgZZVar4e[i]-BkgZZVar4e[0])/BkgZZVar4e[0];
+tmp3 = abs(BkgZZVar4mu[i]-BkgZZVar4mu[0])/BkgZZVar4mu[0];
+
+if (tmp1 >= max2e2mu){
+max2e2mu = tmp1;
+}
+
+if (tmp2 >= max4e){
+max4e = tmp2;
+}
+
+if (tmp3 >= max4mu){
+max4mu = tmp3;
+}
+
+}
+
+cout << "max ZZ Bkg. variations: " << endl;
+cout << "2e2mu: " << max2e2mu << endl;
+cout << "4e: " << max4e << endl;
+cout << "4mu: " << max4mu << endl;
+
+
+// GG Background
+max2e2mu = 0;
+max4e = 0;
+max4mu = 0;
+
+for (int i=1; i<9 ; i++){
+tmp1 = abs(BkgGGVar2e2mu[i]-BkgGGVar2e2mu[0])/BkgGGVar2e2mu[0];
+tmp2 = abs(BkgGGVar4e[i]-BkgGGVar4e[0])/BkgGGVar4e[0];
+tmp3 = abs(BkgGGVar4mu[i]-BkgGGVar4mu[0])/BkgGGVar4mu[0];
+
+if (tmp1 >= max2e2mu){
+max2e2mu = tmp1;
+}
+
+if (tmp2 >= max4e){
+max4e = tmp2;
+}
+
+if (tmp3 >= max4mu){
+max4mu = tmp3;
+}
+
+}
+
+cout << "max GG Bkg. variations: " << endl;
+cout << "2e2mu: " << max2e2mu << endl;
+cout << "4e: " << max4e << endl;
+cout << "4mu: " << max4mu << endl;
 
 
 
