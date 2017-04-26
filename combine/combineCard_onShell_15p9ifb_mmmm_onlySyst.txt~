@@ -9,10 +9,10 @@ kmax *  number of nuisance parameters
 bin            1
 observation    -1
 ------------
-bin                   	  1	1          1         
+bin                   	  1		        1	          1         
 process                 ZZTo4L   GluGluZZ   ZZJJTo4L_EWK   
-process            	  1	2	0
-rate                    1.31839	0.792418	1.24614
+process            	  1			2		0
+rate                    1.31839		0.792418		1.24614
 ------------
    
-jetEnScale    lnN 	1.0699081	1.0812028	1.0155239
+jetEnScale    lnN 	1.0624092	1.0592484	1.0123452

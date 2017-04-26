@@ -14,14 +14,14 @@ process                 ZZTo4L   GluGluZZ   ZZJJTo4L_EWK
 process            	  1			2		0
 rate                    1.31839		0.792418		1.24614 
 ------------
-
-mEff              lnN   1.023    1.022      1.033                      
+bkgStat           lnN   -        -          -              
+mEff              lnN   1.023    1.022      1.033             
+scale             lnN   1.010    1.010      1.010          
 mEnergy           lnN   1.000    1.000      1.000       
 pu                lnN   1.006    1.006      1.006       
 met               lnN   -        -          -          
 mFR               lnN   -        -          -         
 trigger           lnN   1.020    1.020      1.020         
-pdf               lnN   1.0924137    1.000      1.0877539       #For the one that is 0, Nate had 10%
-scale             lnN   1.315678    1.000      1.0874628       #For the one that is 0, Nate had 10%
-#mcStat_mmmm      lnN   1.006    1.002      1.002         
-MC 	      lnN 1.0219953	1.00900901	1.00607962
+pdf               lnN   1.010    1.010      1.010       
+mcStat_mmmm       lnN   1.006    1.002      1.002         
+MC 		lnN		1.0219953	1.00900901	1.00607962

@@ -23,7 +23,7 @@ pu                lnN   1.008    1.007      1.007
 trigger           lnN   1.020    1.020      1.020          
 eEff              lnN   1.050    1.051      1.050          
 ePhiRes           lnN   1.000    1.000      1.000        
-#mcStat_eemm       lnN   1.005    1.001      1.002          
+mcStat_eemm       lnN   1.005    1.001      1.002          
 eRhoRes           lnN   1.000    1.000      1.000        
 met               lnN   -        -          -             
 mFR               lnN   -        -          -            
