@@ -23,12 +23,11 @@ pu                lnN   1.008    1.007      1.007
 trigger           lnN   1.020    1.020      1.020          
 eEff              lnN   1.050    1.051      1.050          
 ePhiRes           lnN   1.000    1.000      1.000        
-#mcStat_eemm       lnN   1.005    1.001      1.002          
+mcStat_eemm       lnN   1.005    1.001      1.002          
 eRhoRes           lnN   1.000    1.000      1.000        
 met               lnN   -        -          -             
 mFR               lnN   -        -          -            
-scale             lnN   1.315907    1.010      1.0870503 	 #For the one that is 10%, I had 0%      
-pdf               lnN   1.0904753    1.010      1.0882121    #For the one that is 10%, I had 0% 
+scale             lnN   1.315907    1.000      1.0870503 	 #For the one that is 0, Nate had 10%      
+pdf               lnN   1.0904753    1.000      1.0882121    #For the one that is 0, Nate had 10% 
 eFR               lnN   -        -          -         
-MC		  lnN	1.0171853	1.00731468	1.00469851
-jetEnScale        lnN  1.0564087   1.059497  1.0115678
+MC                lnN	1.0171853	1.00731468	1.00469851
