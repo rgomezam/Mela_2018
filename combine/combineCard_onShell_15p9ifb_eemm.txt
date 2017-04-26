@@ -1,4 +1,4 @@
-# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZemuemu) -> bkgStat (MC, lowest line) calculated by me, the rest taken from Nate
+# Raquel datacard Feb 2017, one signal (VBS) and 2 backgrounds (ggZZ and ZZemuemu) 
 #
 #  
 

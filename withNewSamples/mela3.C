@@ -957,13 +957,17 @@ cout << "cutting =  " << cutting2e2mu66 << endl;
 
 
 cout << "Find the maximum variations: " << endl;
-float max2e2mu,max4e,max4mu, tmp1,tmp2,tmp3;
+float max2e2mu = 0;
+float max4e = 0;
+float max4mu = 0;
+float tmp1,tmp2,tmp3;
 
 //Signal
 for (int i=1; i<9 ; i++){
 tmp1 = abs(sigVar2e2mu[i]-sigVar2e2mu[0])/sigVar2e2mu[0];
 tmp2 = abs(sigVar4e[i]-sigVar4e[0])/sigVar4e[0];
 tmp3 = abs(sigVar4mu[i]-sigVar4mu[0])/sigVar4mu[0];
+
 
 if (tmp1 >= max2e2mu){
 max2e2mu = tmp1;
@@ -990,10 +994,14 @@ max2e2mu = 0;
 max4e = 0;
 max4mu = 0;
 
+
+
 for (int i=1; i<9 ; i++){
 tmp1 = abs(BkgZZVar2e2mu[i]-BkgZZVar2e2mu[0])/BkgZZVar2e2mu[0];
 tmp2 = abs(BkgZZVar4e[i]-BkgZZVar4e[0])/BkgZZVar4e[0];
 tmp3 = abs(BkgZZVar4mu[i]-BkgZZVar4mu[0])/BkgZZVar4mu[0];
+
+cout << "tmp1 = " << tmp1 << endl; 
 
 if (tmp1 >= max2e2mu){
 max2e2mu = tmp1;
@@ -1136,6 +1144,9 @@ cout << "Find the maximum variations: " << endl;
 float max2e2mu,max4e,max4mu, tmp1,tmp2,tmp3;
 
 //Signal
+max2e2mu = 0;
+max4e = 0;
+max4mu = 0;
 for (int i=1; i<5 ; i++){
 tmp1 = abs((sigVar2e2mu[i]-sigVar2e2mu[0])/sigVar2e2mu[0]);
 tmp2 = abs((sigVar4e[i]-sigVar4e[0])/sigVar4e[0]);

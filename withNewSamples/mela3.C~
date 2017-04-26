@@ -91,13 +91,6 @@ char opt;
 SetCuts(); //Allocate all the cutting functions
 
 //while(true){
-  cout << "This is a test: normSig" <<  normSig << endl; // This is a test
-  cout << "This is a test: normBkg" <<  normbkg << endl; // This is a test
-  cout << "This is a test: normB1" <<  normBkg1 << endl; // This is a test
-  cout << "This is a test: normB2" <<  normBkg2 << endl; // This is a test
-  cout << "This is a test: normB3" <<  normBkg3 << endl; // This is a test
-
-
 
   cout << "Enter:" << endl;
   
@@ -520,7 +513,7 @@ void getSystematics() {
     
     float DeltaSig2e2mu = (rate2e2muUp -rate2e2mu)/rate2e2mu;
     cout << "Delta S (2e2mu) [UP]" << DeltaSig2e2mu << endl; 
-    float DeltaSig2e2muDn = (rate2e2muDn -rate2e2mu)/rate2e2mu;
+    float DeltaSig2e2muDn = abs((rate2e2muDn -rate2e2mu)/rate2e2mu);
     cout << "Delta S (2e2mu) [Dn]" << DeltaSig2e2muDn << endl; 
 
     cout << "Delta S (2e2mu) [Average]" << (DeltaSig2e2mu + DeltaSig2e2muDn)/2. << endl;
@@ -541,7 +534,7 @@ void getSystematics() {
 
     float DeltaSig4e = (rate4eUp -rate4e)/rate4e;
     cout << "Delta S (4e) [UP]" << DeltaSig4e << endl; 
-    float DeltaSig4eDn = (rate4eDn -rate4e)/rate4e;
+    float DeltaSig4eDn = abs((rate4eDn -rate4e)/rate4e);
     cout << "Delta S (4e) [Dn]" << DeltaSig4eDn << endl; 
 
     cout << "Delta S (4e) [Average]" << (DeltaSig4e + DeltaSig4eDn)/2. << endl;      
@@ -561,7 +554,7 @@ void getSystematics() {
 
     float DeltaSig4mu = (rate4muUp -rate4mu)/rate4mu;
     cout << "Delta S (4mu) [UP]" << DeltaSig4mu << endl; 
-    float DeltaSig4muDn = (rate4muDn -rate4mu)/rate4mu;
+    float DeltaSig4muDn = abs((rate4muDn -rate4mu)/rate4mu);
     cout << "Delta S (4mu) [Dn]" << DeltaSig4muDn << endl; 
 
     cout << "Delta S (4mu) [Average]" << (DeltaSig4mu + DeltaSig4muDn)/2. << endl;
@@ -583,7 +576,7 @@ void getSystematics() {
 
     float DeltaBkgZZto4e = (ratebkgZZ4eUp - ratebkgZZ4e)/ratebkgZZ4e;
     cout << "Delta Bkg ZZ (4e) [UP]" << DeltaBkgZZto4e << endl; 
-    float DeltaBkgZZto4eDn = (ratebkgZZ4eDn - ratebkgZZ4e)/ratebkgZZ4e;
+    float DeltaBkgZZto4eDn = abs((ratebkgZZ4eDn - ratebkgZZ4e)/ratebkgZZ4e);
     cout << "Delta Bkg ZZ (4e) [Dn]" << DeltaBkgZZto4eDn << endl; 
 
     cout << "Delta Bkg ZZ (4e) [Average]" << (DeltaBkgZZto4e + DeltaBkgZZto4eDn)/2. << endl;
@@ -603,7 +596,7 @@ void getSystematics() {
 
     float DeltaBkgZZto4mu = (ratebkgZZ4muUp - ratebkgZZ4mu)/ratebkgZZ4mu;
     cout << "Delta Bkg ZZ (4mu) [UP]" << DeltaBkgZZto4mu << endl; 
-    float DeltaBkgZZto4muDn = (ratebkgZZ4muDn - ratebkgZZ4mu)/ratebkgZZ4mu;
+    float DeltaBkgZZto4muDn = abs((ratebkgZZ4muDn - ratebkgZZ4mu)/ratebkgZZ4mu);
     cout << "Delta Bkg ZZ (4mu) [Dn]" << DeltaBkgZZto4muDn << endl; 
     
     cout << "Delta Bkg ZZ (4mu) [Average]" << (DeltaBkgZZto4mu + DeltaBkgZZto4muDn)/2. << endl;
@@ -624,7 +617,7 @@ void getSystematics() {
 
     float DeltaBkgZZto2e2mu = (ratebkgZZ2e2muUp - ratebkgZZ2e2mu)/ratebkgZZ2e2mu;
     cout << "Delta Bkg ZZ (2e2mu) [UP]" << DeltaBkgZZto2e2mu << endl; 
-    float DeltaBkgZZto2e2muDn = (ratebkgZZ2e2muDn - ratebkgZZ2e2mu)/ratebkgZZ2e2mu;
+    float DeltaBkgZZto2e2muDn = abs((ratebkgZZ2e2muDn - ratebkgZZ2e2mu)/ratebkgZZ2e2mu);
     cout << "Delta Bkg ZZ (2e2mu) [Dn]" << DeltaBkgZZto2e2muDn << endl;
 
     cout << "Delta Bkg ZZ (2e2mu) [Average]" << (DeltaBkgZZto2e2mu + DeltaBkgZZto2e2muDn)/2. << endl;
@@ -645,7 +638,7 @@ void getSystematics() {
     
     float DeltaBkgGGto2e2mu = (rategg2e2muUp - rategg2e2mu)/rategg2e2mu;
     cout << "Delta Bkg gg (2e2mu) [UP]" << DeltaBkgGGto2e2mu << endl; 
-    float DeltaBkgGGto2e2muDn = (rategg2e2muDn - rategg2e2mu)/rategg2e2mu;
+    float DeltaBkgGGto2e2muDn = abs((rategg2e2muDn - rategg2e2mu)/rategg2e2mu);
     cout << "Delta Bkg gg (2e2mu) [Dn]" << DeltaBkgGGto2e2muDn << endl; 
 
     cout << "Delta Bkg gg (2e2mu) [Average]" << (DeltaBkgGGto2e2mu + DeltaBkgGGto2e2muDn)/2. << endl;
@@ -666,7 +659,7 @@ void getSystematics() {
     
     float DeltaBkgGGto4e = (rategg4eUp - rategg4e)/rategg4e;
     cout << "Delta Bkg gg (4e) [UP]" << DeltaBkgGGto4e << endl; 
-    float DeltaBkgGGto4eDn = (rategg4eDn - rategg4e)/rategg4e;
+    float DeltaBkgGGto4eDn = abs((rategg4eDn - rategg4e)/rategg4e);
     cout << "Delta Bkg gg (4e) [Dn]" << DeltaBkgGGto4eDn << endl; 
 
     cout << "Delta Bkg gg (4e) [Average]" << (DeltaBkgGGto4e + DeltaBkgGGto4eDn)/2. << endl;
@@ -688,7 +681,7 @@ void getSystematics() {
     
     float DeltaBkgGGto4mu = (rategg4muUp - rategg4mu)/rategg4mu;
     cout << "Delta Bkg gg (4mu) [UP]" << DeltaBkgGGto4mu << endl;
-    float DeltaBkgGGto4muDn = (rategg4muDn - rategg4mu)/rategg4mu;
+    float DeltaBkgGGto4muDn = abs((rategg4muDn - rategg4mu)/rategg4mu);
     cout << "Delta Bkg gg (4mu) [Dn]" << DeltaBkgGGto4muDn << endl;
     
     cout << "Delta Bkg gg (4mu) [Average]" << (DeltaBkgGGto4mu + DeltaBkgGGto4muDn)/2. << endl;
@@ -964,13 +957,17 @@ cout << "cutting =  " << cutting2e2mu66 << endl;
 
 
 cout << "Find the maximum variations: " << endl;
-float max2e2mu,max4e,max4mu, tmp1,tmp2,tmp3;
+float max2e2mu = 0;
+float max4e = 0;
+float max4mu = 0;
+float tmp1,tmp2,tmp3;
 
 //Signal
 for (int i=1; i<9 ; i++){
 tmp1 = abs(sigVar2e2mu[i]-sigVar2e2mu[0])/sigVar2e2mu[0];
 tmp2 = abs(sigVar4e[i]-sigVar4e[0])/sigVar4e[0];
 tmp3 = abs(sigVar4mu[i]-sigVar4mu[0])/sigVar4mu[0];
+
 
 if (tmp1 >= max2e2mu){
 max2e2mu = tmp1;
@@ -997,10 +994,15 @@ max2e2mu = 0;
 max4e = 0;
 max4mu = 0;
 
+
+
+
 for (int i=1; i<9 ; i++){
 tmp1 = abs(BkgZZVar2e2mu[i]-BkgZZVar2e2mu[0])/BkgZZVar2e2mu[0];
 tmp2 = abs(BkgZZVar4e[i]-BkgZZVar4e[0])/BkgZZVar4e[0];
 tmp3 = abs(BkgZZVar4mu[i]-BkgZZVar4mu[0])/BkgZZVar4mu[0];
+
+cout << "tmp1 = " << tmp1 << endl; 
 
 if (tmp1 >= max2e2mu){
 max2e2mu = tmp1;
@@ -1143,6 +1145,9 @@ cout << "Find the maximum variations: " << endl;
 float max2e2mu,max4e,max4mu, tmp1,tmp2,tmp3;
 
 //Signal
+max2e2mu = 0;
+max4e = 0;
+max4mu = 0;
 for (int i=1; i<5 ; i++){
 tmp1 = abs((sigVar2e2mu[i]-sigVar2e2mu[0])/sigVar2e2mu[0]);
 tmp2 = abs((sigVar4e[i]-sigVar4e[0])/sigVar4e[0]);
