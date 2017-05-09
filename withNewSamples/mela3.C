@@ -69,6 +69,8 @@ void PDFVariations();
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
 char cutting[400];
+char cuttingi[400];
+char cuttingMVA[400];
 char cuttingCandC[400];
 char cutting66[400];
 char cutting4e66[400];
@@ -168,10 +170,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float Tp[ncuts];
 
 
-  char cuttingi[400]; 
-  char cuttingCandC[400];
-  char cuttingMVA[400];
-  
 
 // First (no loop) find the denominators (effsig=X , effbkg=Y)  OBS Here there is a cut on mjj is 100 (fiducial)
     
@@ -229,7 +227,6 @@ gROOT->ProcessLine(".x tdrstyle.C");
     
     sig->Draw(Discriminant,cutting);
     float effsig = h1->Integral()*normSig;
-    cout << "This is a test: effsig" <<  effsig << endl; // This is a test
 
     
     bkg->Draw(Discriminant,cutting);
@@ -348,17 +345,17 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
    
     gr1->SetLineWidth(7);
     gr1->SetLineColor(kRed);
-    gr1->GetXaxis()->SetLimits(-0.07,1.07);
+    gr1->GetXaxis()->SetLimits(0.0,1.);
     gr1->SetMinimum(0.);
-    gr1->SetMaximum(1.07);
+    gr1->SetMaximum(1.);
     mg->Add(gr1); 
     
     
     gr3->SetLineWidth(7);
     gr3->SetLineColor(kBlue);
-    gr3->GetXaxis()->SetLimits(-0.07,1.07);
+    gr3->GetXaxis()->SetLimits(0.0,1.);
     gr3->SetMinimum(0.);
-    gr3->SetMaximum(1.07); 
+    gr3->SetMaximum(1.); 
     mg->Add(gr3); 
  
 
@@ -393,7 +390,7 @@ pt->AddText("CMS ");
 pt->Draw("same");
 
 TPaveText *pt2 = new TPaveText(0.18,0.85,0.4,0.80, "NDC");
-pt2->AddText(" Simulation");
+pt2->AddText(" Simulation Preliminary");
 pt2->SetFillColor(0);
 pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
