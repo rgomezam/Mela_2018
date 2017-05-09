@@ -42,6 +42,7 @@ void PDFVariations();
 
  
   char Discriminant[400] = {"p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1"};
+  char DiscriminantMVA[400] = {"p_JJVBF_BKG_MCFM_JECNominal/(p_JJVBF_BKG_MCFM_JECNominal+0.2*p_JJQCD_BKG_MCFM_JECNominal) >> h1"};
   char Discriminant_JeCUp[400] = {"p_JJVBF_BKG_MCFM_JECUp/(p_JJVBF_BKG_MCFM_JECUp+0.2*p_JJQCD_BKG_MCFM_JECUp) >> h1"};
   char Discriminant_JeCDn[400] = {"p_JJVBF_BKG_MCFM_JECDn/(p_JJVBF_BKG_MCFM_JECDn+0.2*p_JJQCD_BKG_MCFM_JECDn) >> h1"};
 
@@ -85,7 +86,7 @@ char cutting4muDn[400];
 char cutting2e2muDn[400];
 
 
-void mela3() {
+void mela4() {
 
 char opt;
 
@@ -218,6 +219,8 @@ gROOT->ProcessLine(".x tdrstyle.C");
     
     Z = effbkgMVA0;
     T = effsigMVA0;
+
+   cout << " Z,T = " << Z << "," << T << endl;
     
 
 
@@ -251,10 +254,13 @@ gROOT->ProcessLine(".x tdrstyle.C");
 
 // ZZjj_MVA
    cutsMVA[i] = -0.63 + i*0.0147;
-   sprintf(cuttingMVA,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && ZZjj_MVA > %f",cutsMVA[i]);
+  sprintf(cuttingMVA,"nCleanedJetsPt30 > 1 && DiJetMass > 100. && Z1Mass > 60. && Z1Mass < 120. && Z2Mass > 60. && Z2Mass < 120. && ZZjj_MVA > %f", cutsMVA[i]);
+  cout << "cutting MVA " << cuttingMVA << endl;
     sig->Draw("ZZjj_MVA >> h1",cuttingMVA); 
     float effsigMVA = h1->Integral()*normSig;    
     
+  cout << "test effsigMVA " << effsigMVA << endl;
+
     bkg->Draw("ZZjj_MVA >> h1",cuttingMVA);
     float effbkgMVA = h1->Integral()*normbkg;
 
@@ -268,9 +274,13 @@ gROOT->ProcessLine(".x tdrstyle.C");
     effbkgMVA =+ h1->Integral()*normBkg3;
 
 
+     cout << "test effbkgMVA " << effbkgMVA << endl;
 
     Tp[i] = effsigMVA;
     Zp[i] = effbkgMVA;
+
+
+    cout << " Z, T (MVA) " << Zp[i] << "," << Tp[i] << endl; 
 
 
   }
@@ -285,27 +295,29 @@ Beff[i]=Xp[i]/X;
 Seff[i]=Yp[i]/Y;
 BeffMVA[i]=Zp[i]/Z;
 SeffMVA[i]=Tp[i]/T;
+
+cout << "Seff MVA, Beff MVA" << SeffMVA[i] << "," << BeffMVA[i] << endl;
 }
 
 
 
 //Third and fourth: find the point given by the cuts: // (This has already been tested so I comment one of both) 
-/*  
-    sig->Draw(Discriminant,cutting2);
+
+    sig->Draw(Discriminant,cuttingCandC);
     float effsig2 = h1->Integral()*normSig;
    
     
-    bkg->Draw(Discriminant,cutting2);
+    bkg->Draw(Discriminant,cuttingCandC);
     float effbkg2 = h1->Integral()*normbkg;
  
 
-    bkg1->Draw(Discriminant,cutting2);
+    bkg1->Draw(Discriminant,cuttingCandC);
     effbkg2 =+ h1->Integral()*normBkg1;
 
-    bkg2->Draw(Discriminant,cutting2);
+    bkg2->Draw(Discriminant,cuttingCandC);
     effbkg2 =+ h1->Integral()*normBkg2;
  
-    bkg3->Draw(Discriminant,cutting2);
+    bkg3->Draw(Discriminant,cuttingCandC);
     effbkg2 =+ h1->Integral()*normBkg3;
     
   
@@ -313,16 +325,18 @@ SeffMVA[i]=Tp[i]/T;
     float X2 = effbkg2/X;
    
 
-*/  
+
 
 
 //Fourth: test see if you produce the same point with the mva
 
     // ZZjj_MVA
 
-    sig->Draw("ZZjj_MVA >> h1",cuttingCandC); 
+/*    sig->Draw("ZZjj_MVA >> h1",cuttingCandC); 
     float effsigMVA2 = h1->Integral()*normSig;    
     
+    cout << "test effsigMVA2" << effsigMVA2 << endl;   
+
     bkg->Draw("ZZjj_MVA >> h1",cuttingCandC);
     float effbkgMVA2 = h1->Integral()*normbkg;
 
@@ -337,17 +351,21 @@ SeffMVA[i]=Tp[i]/T;
     
     float Z2 = effbkgMVA2/Z;    
     float T2 = effsigMVA2/T;
-
+*/
 
 
 TMultiGraph* mg  = new TMultiGraph();
 mg->SetTitle("; #epsilon_{B}; #epsilon_{S}"); // You can add a tittle in the first entry
 TGraph *gr1 = new TGraph(ncuts, Beff, Seff); 
-//TMarker *gr2 = new TMarker(X2,Y2,22);
+TMarker *gr2 = new TMarker(X2,Y2,22);
 TGraph *gr3 = new TGraph(ncuts, BeffMVA, SeffMVA); 
-TMarker *gr4 = new TMarker(Z2,T2,22);
+//TMarker *gr4 = new TMarker(Z2,T2,22);
+//Test
+TGraph *gr6 = new TGraph(ncuts, SeffMVA, BeffMVA); 
+
+ 
    
-    gr1->SetLineWidth(7);
+    gr1->SetLineWidth(2);
     gr1->SetLineColor(kRed);
     gr1->GetXaxis()->SetLimits(-0.07,1.01);
     gr1->SetMinimum(-0.01);
@@ -355,7 +373,7 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
     mg->Add(gr1); 
     
     
-    gr3->SetLineWidth(7);
+    gr3->SetLineWidth(2);
     gr3->SetLineColor(kBlue);
     gr3->GetXaxis()->SetLimits(-0.07,1.01);
     gr3->SetMinimum(-0.01);
@@ -363,15 +381,24 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
     mg->Add(gr3); 
  
 
-   // gr2->SetMarkerSize(4);
-   // gr2->SetMarkerStyle(22);
-    gr4->SetMarkerSize(4);  
-    gr4->SetMarkerStyle(22);
+    gr6->SetLineWidth(2);
+    gr6->SetLineColor(kGreen);
+    gr6->GetXaxis()->SetLimits(-0.07,1.01);
+    gr6->SetMinimum(-0.01);
+    gr6->SetMaximum(1.01); 
+    mg->Add(gr6); 
+
+    gr2->SetMarkerSize(4);
+    gr2->SetMarkerStyle(22);
+   // gr4->SetMarkerSize(4);  
+   // gr4->SetMarkerStyle(22);
+
+
 
 
     mg->Draw("AL");   
-    //gr2->Draw("same");
-    gr4->Draw("same");
+    gr2->Draw("same");
+    //gr4->Draw("same");
 
 
   TLegend *legend = new TLegend(0.50,0.25,0.80,0.40,NULL,"brNDC");
@@ -383,7 +410,7 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
   legend->AddEntry(gr1, "MELA" , "l");
   // legend->AddEntry(gr2, "VBS cut-based" , "l");
   legend->AddEntry(gr3, "BDT" , "l");
-  legend->AddEntry(gr4, "Cut-based" , "p");
+  legend->AddEntry(gr2, "Cut-based" , "p");
   legend->Draw("same");
  
 TPaveText *pt = new TPaveText(0.18,0.9,0.4,0.85, "NDC");

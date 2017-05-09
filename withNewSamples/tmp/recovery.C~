@@ -255,7 +255,7 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     //gr1->SetTitle("ROC curve MELA");
     gr1->SetLineWidth(7);
     gr1->SetLineColor(kRed);
-    gr1->GetXaxis()->SetLimits(-0.07,1.07);
+    gr1->GetXaxis()->SetLimits(-0.07,1.0);
     //gr1->GetXaxis()->SetTitle("Background eff");
     //gr1->GetYaxis()->SetTitle("Signal eff");
     gr1->SetMinimum(0.);
@@ -265,7 +265,7 @@ TMarker *gr4 = new TMarker(Z2,T2,21);
     
     gr3->SetLineWidth(7);
     gr3->SetLineColor(kBlue);
-    gr3->GetXaxis()->SetLimits(-0.07,1.07);
+    gr3->GetXaxis()->SetLimits(-0.07,1.0);
     //gr3->GetXaxis()->SetTitle("Background eff");
     //gr3->GetYaxis()->SetTitle("Signal eff");
     gr3->SetMinimum(0.);
@@ -320,6 +320,8 @@ pt2->Draw("same");
 //gPad->Update();
 //gPad->Modified();
 
+c1->SaveAs("RocCurve-NEW.gif");
+c1->SaveAs("RocCurve-NEW.pdf");
 
 
 

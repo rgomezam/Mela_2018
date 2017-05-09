@@ -68,7 +68,7 @@ void PDFVariations();
    float normBkg2 = Lumi*0.00158549/NgenBkg2;
    float normBkg3 = Lumi*0.00158549/NgenBkg3;
 
-char cutting[400];
+
 char cuttingCandC[400];
 char cutting66[400];
 char cutting4e66[400];
@@ -166,6 +166,11 @@ gROOT->ProcessLine(".x tdrstyle.C");
    float Yp[ncuts];   
    float Zp[ncuts];
    float Tp[ncuts];
+
+
+  char cuttingi[400]; 
+  char cuttingCandC[400];
+  char cuttingMVA[400];
 
 
 
@@ -343,17 +348,17 @@ TMarker *gr4 = new TMarker(Z2,T2,22);
    
     gr1->SetLineWidth(7);
     gr1->SetLineColor(kRed);
-    gr1->GetXaxis()->SetLimits(0.0,1.);
-    gr1->SetMinimum(0.);
-    gr1->SetMaximum(1.);
+    gr1->GetXaxis()->SetLimits(-0.07,1.01);
+    gr1->SetMinimum(-0.01);
+    gr1->SetMaximum(1.01);
     mg->Add(gr1); 
     
     
     gr3->SetLineWidth(7);
     gr3->SetLineColor(kBlue);
-    gr3->GetXaxis()->SetLimits(0.0,1.);
-    gr3->SetMinimum(0.);
-    gr3->SetMaximum(1.); 
+    gr3->GetXaxis()->SetLimits(-0.07,1.01);
+    gr3->SetMinimum(-0.01);
+    gr3->SetMaximum(1.01); 
     mg->Add(gr3); 
  
 
@@ -384,11 +389,11 @@ TPaveText *pt = new TPaveText(0.18,0.9,0.4,0.85, "NDC");
 pt->SetFillColor(0);
 pt->SetTextFont(62);
 pt->SetTextSize  (0.04);
-pt->AddText("CMS ");
+pt->AddText("CMS");
 pt->Draw("same");
 
 TPaveText *pt2 = new TPaveText(0.18,0.85,0.4,0.80, "NDC");
-pt2->AddText(" Simulation Preliminary");
+pt2->AddText("Simulation Preliminary");
 pt2->SetFillColor(0);
 pt2->SetTextFont(52);
 pt2->SetTextSize  (0.04);
@@ -439,7 +444,7 @@ void getRates(/*TFile *f1, TFile *f2, TFile *f5, TFile *f6, TFile *f7 , TH1F *h1
     float ratebkgZZ4e = h1->Integral()*normbkg;
    
     cout << "Bkg rate ZZ -> 4e:" << ratebkgZZ4e << endl; 
-    //cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl; 
+//cout << bkg->Scan("GenLep1Id:GenLep2Id:GenLep3Id:GenLep4Id") << endl; 
 
     bkg->Draw(Discriminant,cutting4mu66);
     float ratebkgZZ4mu = h1->Integral()*normbkg;
