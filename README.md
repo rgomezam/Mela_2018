@@ -1,13 +1,4 @@
-USEFUL COMMANDS
 
-To combine multiple cards: 
-combineCards.py Name1=card1.txt Name2=card2.txt .... > card.txt 
 
-in particular:
-combineCards.py Name1=combineCard_onShell_15p9ifb_eeee.txt Name2=combineCard_onShell_15p9ifb_mmmm.txt 
-Name3=combineCard_onShell_15p9ifb_eemm.txt > combinedCard.txt
-
-To run the likelihood analysis:
-Run with: combine -M ProfileLikelihood --significance combineCard_eeee.txt -t -1 --expectSignal=1 -S 0 --toysFreq
-
-candTree->Print("*LHEwe*")
+mela3.c and mela4.c are a bit more fancy, they contain several functions and a dialague where you can choose which option you want to run (create curve, open curve that was previously created, calculate errors, etc). I think mela3 worked and mela4 didn't but I don't remember the difference.
+ 
